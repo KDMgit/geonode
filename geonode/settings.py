@@ -37,20 +37,45 @@ DEBUG = TEMPLATE_DEBUG = True
 # geonode to be listening for GeoServer auth requests.
 os.environ['DJANGO_LIVE_TEST_SERVER_ADDRESS'] = 'localhost:8000'
 
+#Import uploaded shapefiles into a database such as PostGIS?
+DB_DATASTORE = True
+
+#Database datastore connection settings
+DB_DATASTORE_DATABASE = 'geoserver'
+DB_DATASTORE_USER = 'opengeo'
+DB_DATASTORE_PASSWORD = 'opengeo'
+#DB_DATASTORE_HOST = '95.110.167.79'
+DB_DATASTORE_HOST = '192.168.0.53'
+DB_DATASTORE_PORT = '5432'
+DB_DATASTORE_TYPE = 'postgis'
+#The name of the store in Geoserver
+DB_DATASTORE_NAME = 'geoserver'
+
 # Defines settings for development
 DATABASES = {
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'HOST' : DB_DATASTORE_HOST,
+        'NAME' : DB_DATASTORE_DATABASE,
+        'USER' : DB_DATASTORE_USER,
+        'PASSWORD' : DB_DATASTORE_PASSWORD,
+        'PORT' : DB_DATASTORE_PORT
+    }
+}
+
+"""DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(PROJECT_ROOT, 'development.db'),
     }
-}
+}"""
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'Europe/Rome'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -345,11 +370,11 @@ SITEURL = "http://localhost:8000/"
 # GeoServer information
 
 # The FULLY QUALIFIED url to the GeoServer instance for this GeoNode.
-GEOSERVER_BASE_URL = "http://localhost:8080/geoserver/"
+GEOSERVER_BASE_URL = "http://192.168.0.53:8080/geoserver/"
 
 # The username and password for a user that can add and
 # edit layer details on GeoServer
-GEOSERVER_CREDENTIALS = "admin", "geoserver"
+GEOSERVER_CREDENTIALS = "admin", "admin"
 
 # CSW settings
 CATALOGUE = {
@@ -484,22 +509,6 @@ MAP_BASELAYERS = [{
     ]
 
 }]
-
-# GeoNode vector data backend configuration.
-
-#Import uploaded shapefiles into a database such as PostGIS?
-DB_DATASTORE = False
-
-#Database datastore connection settings
-DB_DATASTORE_DATABASE = ''
-DB_DATASTORE_USER = ''
-DB_DATASTORE_PASSWORD = ''
-DB_DATASTORE_HOST = ''
-DB_DATASTORE_PORT = ''
-DB_DATASTORE_TYPE = ''
-DB_DATASTORE_NAME = ''
-
-#The name of the store in Geoserver
 
 LEAFLET_CONFIG = {
     'TILES_URL': 'http://{s}.tile2.opencyclemap.org/transport/{z}/{x}/{y}.png'
