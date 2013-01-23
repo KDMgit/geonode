@@ -14,7 +14,7 @@ If you just want to try GeoNode, it is recommended to use Ubuntu 10.04 and insta
 
 If you are interested in doing development only on GeoNode and want to connecto to an already existing GeoServer::
     
-    # Install everithing needed
+    # Install everything needed
     sudo apt-get install build-essential libxml2-dev libxslt-dev
     sudo apt-get install python-dev python-virtualenv python-imaging python-lxml python-pyproj python-shapely python-nose python-httplib2
     sudo apt-get install postgresql-server-dev-9.1 
@@ -44,7 +44,7 @@ If you are interested in doing development only on GeoNode and want to connecto 
     # Sync
     python manager.py syncdb
 
-    # Start (do this to start everitime the server from now on)
+    # Start (do this to start everytime the server from now on)
     python manager.py runserver
 
 If instead, you are interested in doing development on the source code, here are the instructions for Ubuntu 12.04::
