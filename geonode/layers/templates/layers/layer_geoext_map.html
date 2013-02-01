@@ -1,8 +1,7 @@
-{% include "geonode/ext_header.html" %}
-{% include "geonode/app_header.html" %}
-{% include "geonode/geo_header.html" %}
+{% include "geonode/ext_header.html" %} {% include "geonode/app_header.html" %} {% include "geonode/geo_header.html" %} {% include "geonode/ocd_header.html" %}
 
 <script type="text/javascript">
+var foobar = {};
 {% autoescape off %}
         var styleEditor, modified = false;
         Ext.onReady(function() {
@@ -10,9 +9,9 @@
                 tools: [{
                     ptype: "gxp_wmsgetfeatureinfo",
                     format: "grid",
-                    actionTarget: "main.tbar",
+                    actionTarget: "paneltbar",
                     outputConfig: {width: 400, height: 200, panIn: false}
-                }],
+                }, ],
                 proxy: "/proxy/?url=",
                 localGeoServerBaseUrl: "{{GEOSERVER_BASE_URL}}",
                 authorizedRoles: "{{ user.is_authenticated|yesno:"ROLE_ADMINISTRATOR,ROLE_ANONYMOUS" }}",
@@ -30,9 +29,20 @@
                 },
 
                 listeners: {
+                    "portalready" : function(){
+                    	/*
+                         * After GeoExplorer has started apply our plugin to the toolbar
+                         */
+                    	OCD.plugToolbar(app);
+                    },
                     "ready": function() {
                         var map = app.mapPanel.map;
                         map.zoomToExtent(map.layers.slice(-1)[0].maxExtent);
+                        
+                        /*
+                         * After GeoExplorer has started apply our plugin to the layers
+                         */
+                        OCD.plugLayers(app);
                     },
                     "beforeunload": function() {
                         if (modified) {
@@ -42,9 +52,8 @@
                     }
                 }
             };
-
+            
             config = Ext.apply(config, {{ viewer|safe }});
-
             app = new GeoExplorer.Viewer(config);
         }); 
     {% endautoescape %}
