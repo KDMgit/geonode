@@ -92,6 +92,9 @@ urlpatterns = patterns('',
                                   {'sitemaps': sitemaps}, name='sitemap'),
     (r'^i18n/', include('django.conf.urls.i18n')),
     (r'^admin/', include(admin.site.urls)),
+    
+    #OCD
+    (r'^poi/', include('geonode.poi.urls')),
 
     )
 

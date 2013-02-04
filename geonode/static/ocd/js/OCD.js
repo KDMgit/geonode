@@ -29,7 +29,7 @@ OCD.plugLayers = function(app) {
 	map.layers.forEach(function(l) {
 		// Check if l is instanceof OpenLayers.Layer.WMS
 		if (l instanceof OpenLayers.Layer.WMS)
-			// If it's so, add it to the queriable layers
+			// If it's true, add it to the queriable layers
 			layers.push(l)
 	})
 
@@ -54,11 +54,16 @@ OCD.plugLayers = function(app) {
 
 				// If there is an ID, let's do stuff...
 				if (id != null && id != "") {
-					alert(id);
+					OCD.openPOI(id);
 				}
 			}
 		}
 	});
+
+	// Let's do stuff!!!!!!
+	OCD.openPOI = function(id) {
+		location = "/poi/" + id + "/"
+	};
 
 	// Let's add the control
 	map.addControl(select);

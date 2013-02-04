@@ -44,8 +44,7 @@ DB_DATASTORE = True
 DB_DATASTORE_DATABASE = 'geoserver'
 DB_DATASTORE_USER = 'opengeo'
 DB_DATASTORE_PASSWORD = 'opengeo'
-#DB_DATASTORE_HOST = '95.110.167.79'
-DB_DATASTORE_HOST = '192.168.0.53'
+DB_DATASTORE_HOST = '95.110.167.11'
 DB_DATASTORE_PORT = '5432'
 DB_DATASTORE_TYPE = 'postgis'
 #The name of the store in Geoserver
@@ -195,6 +194,9 @@ INSTALLED_APPS = (
     'geonode.search',
     'geonode.catalogue',
     'geonode.documents',
+    
+    #OCD
+    'geonode.poi',
 )
 
 LOGGING = {
@@ -370,7 +372,7 @@ SITEURL = "http://localhost:8000/"
 # GeoServer information
 
 # The FULLY QUALIFIED url to the GeoServer instance for this GeoNode.
-GEOSERVER_BASE_URL = "http://192.168.0.53:8080/geoserver/"
+GEOSERVER_BASE_URL = "http://95.110.167.11:8080/geoserver/"
 
 # The username and password for a user that can add and
 # edit layer details on GeoServer
