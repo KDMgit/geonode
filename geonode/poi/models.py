@@ -5,19 +5,21 @@ import simplejson
 
 class Poi(models.Model):
     poi_id = models.CharField(max_length=300)
+    __propertiesCache__ = None
     
     def properties(self):
-        p = {}
-        p['featureid'] = self.poi_id
-        p['outputformat'] = "json"
-        p['request'] = "getFeature"
+        if self.__propertiesCache__ == None:
+            p = {}
+            p['featureid'] = self.poi_id
+            p['outputformat'] = "json"
+            p['request'] = "getFeature"
+            
+            url = GEOSERVER_BASE_URL + "wfs"
+            
+            r = requests.get(url, params=p)
+            j = simplejson.loads(r.text)
+            
+            
+            self.__propertiesCache__ = j['features'][0]['properties']
         
-        url = GEOSERVER_BASE_URL + "wfs"
-        
-        r = requests.get(url, params=p)
-        j = simplejson.loads(r.text)
-        
-        
-        properties = j['features'][0]['properties']
-        
-        return properties
+        return self.__propertiesCache__

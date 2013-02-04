@@ -37,17 +37,17 @@ DEBUG = TEMPLATE_DEBUG = True
 # geonode to be listening for GeoServer auth requests.
 os.environ['DJANGO_LIVE_TEST_SERVER_ADDRESS'] = 'localhost:8000'
 
-#Import uploaded shapefiles into a database such as PostGIS?
+# Import uploaded shapefiles into a database such as PostGIS?
 DB_DATASTORE = True
 
-#Database datastore connection settings
+# Database datastore connection settings
 DB_DATASTORE_DATABASE = 'geoserver'
 DB_DATASTORE_USER = 'opengeo'
 DB_DATASTORE_PASSWORD = 'opengeo'
 DB_DATASTORE_HOST = '95.110.167.11'
 DB_DATASTORE_PORT = '5432'
 DB_DATASTORE_TYPE = 'postgis'
-#The name of the store in Geoserver
+# The name of the store in Geoserver
 DB_DATASTORE_NAME = 'geoserver'
 
 # Defines settings for development
@@ -179,7 +179,7 @@ INSTALLED_APPS = (
     'avatar',
     'dialogos',
     'agon_ratings',
-    #'notification',
+    # 'notification',
     'announcements',
     'actstream',
     'relationships',
@@ -195,7 +195,7 @@ INSTALLED_APPS = (
     'geonode.catalogue',
     'geonode.documents',
     
-    #OCD
+    # OCD
     'geonode.poi',
 )
 
@@ -207,7 +207,7 @@ LOGGING = {
             'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
         },
         'simple': {
-            'format': '%(message)s',        },
+            'format': '%(message)s', },
     },
     'handlers': {
         'null': {
@@ -327,7 +327,10 @@ AGON_RATINGS_CATEGORY_CHOICES = {
     },
     "layers.Layer": {
         "layer": "How good is this layer?"
-    }
+    },
+    "poi.Poi" : {
+        "poi" : "How good is this poi?"
+    },
 }
 
 # Activity Stream
@@ -343,7 +346,7 @@ ACTSTREAM_SETTINGS = {
 SOUTH_MIGRATION_MODULES = {
     'avatar': 'geonode.migrations.avatar',
 }
-SOUTH_TESTS_MIGRATE=False
+SOUTH_TESTS_MIGRATE = False
 
 # Settings for Social Apps
 AUTH_PROFILE_MODULE = 'people.Profile'
@@ -385,16 +388,16 @@ CATALOGUE = {
         # default is pycsw in local mode (tied directly to GeoNode Django DB)
         'ENGINE': 'geonode.catalogue.backends.pycsw_local',
         # pycsw in non-local mode
-        #'ENGINE': 'geonode.catalogue.backends.pycsw_http',
+        # 'ENGINE': 'geonode.catalogue.backends.pycsw_http',
         # GeoNetwork opensource
-        #'ENGINE': 'geonode.catalogue.backends.geonetwork',
+        # 'ENGINE': 'geonode.catalogue.backends.geonetwork',
         # deegree and others
-        #'ENGINE': 'geonode.catalogue.backends.generic',
+        # 'ENGINE': 'geonode.catalogue.backends.generic',
 
         # The FULLY QUALIFIED base url to the CSW instance for this GeoNode
         'URL': '%scatalogue/csw' % SITEURL,
-        #'URL': 'http://localhost:8080/geonetwork/srv/en/csw',
-        #'URL': 'http://localhost:8080/deegree-csw-demo-3.0.4/services',
+        # 'URL': 'http://localhost:8080/geonetwork/srv/en/csw',
+        # 'URL': 'http://localhost:8080/deegree-csw-demo-3.0.4/services',
 
         # login credentials (for GeoNetwork)
         'USER': 'admin',
@@ -460,7 +463,7 @@ MAP_BASELAYERS = [{
         "url": GEOSERVER_BASE_URL + "wms",
         "restUrl": "/gs/rest"
      }
-  },{
+  }, {
     "source": {"ptype": "gxp_olsource"},
     "type":"OpenLayers.Layer",
     "args":["No background"],
@@ -490,7 +493,7 @@ MAP_BASELAYERS = [{
     "fixed": True,
     "visibility": False,
     "group":"background"
-  },{
+  }, {
     "source": {"ptype": "gxp_mapboxsource"},
   }, {
     "source": {"ptype": "gxp_olsource"},
