@@ -29,4 +29,4 @@ class Poi(models.Model):
     
     def get_absolute_url(self):
         return reverse('poi_detail', current_app='poi', args=[self.poi_id])
-
+    

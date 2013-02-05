@@ -14,10 +14,43 @@ OCD.plugins.InfoPOIButton = Ext.extend(Ext.Button, {
 	},
 });
 
+/**
+ * La funzione che segue prima di essere invocata ha bisogno di essere
+ * correttamente inizializzata. E' necessario infatti prima popolare
+ * l'OCD.context come una mappa con i seguenti valori:
+ * 
+ * <b>app</b>: qui, non appena pronta, deve essere inserita l'app di
+ * GeoExplorer. <b>getToolbar</b>: questa funzione deve restituire la toolbar
+ * dove deve essere inserito il pulsate GetFeature. Riceve come input l'app
+ * specificata nel context.
+ */
+Ext.namespace("OCD.context");
+OCD.apply = function(config) {
+	return Ext.apply(config, {
+		listeners : {
+			"portalready" : function() {
+				/*
+				 * After GeoExplorer has started apply our plugin to the toolbar
+				 */
+				OCD.plugToolbar(OCD.context.getToolbar(OCD.context.app));
+			},
+			"ready" : function() {
+				/*
+				 * After GeoExplorer has started apply our plugin to the layers
+				 */
+				OCD.plugLayers(OCD.context.app);
+			},
+			"layerselectionchange" : function() {
+				OCD.plugLayers(OCD.context.app);
+			}
+		}
+	});
+}
+
 // Start toolbar component
-OCD.plugToolbar = function(app) {
-	app.toolbar.addButton(new OCD.plugins.InfoPOIButton());
-	app.toolbar.doLayout();
+OCD.plugToolbar = function(toolbar) {
+	toolbar.addButton(new OCD.plugins.InfoPOIButton());
+	toolbar.doLayout();
 };
 
 // Starts layers controls
