@@ -21,5 +21,5 @@
 from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('geonode.poi.views',
-    url(r'^(?P<poi_id>[^/]+)/$', 'detail'),
+    url(r'^(?P<poi_id>[^/]+)/$', 'poi_detail', name='poi_detail'),
 )

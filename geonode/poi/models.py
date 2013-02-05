@@ -1,5 +1,8 @@
 from django.db import models
+from django.core.urlresolvers import reverse
+
 from geonode.settings import GEOSERVER_BASE_URL
+
 import requests
 import simplejson
 
@@ -23,3 +26,7 @@ class Poi(models.Model):
             self.__propertiesCache__ = j['features'][0]['properties']
         
         return self.__propertiesCache__
+    
+    def get_absolute_url(self):
+        return reverse('poi_detail', current_app='poi', args=[self.poi_id])
+
