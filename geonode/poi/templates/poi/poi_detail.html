@@ -1,35 +1,51 @@
+{% extends "site_base.html" %}
+
 {% load poi_extra %} 
 {% load geonode_auth %} 
 {% load bootstrap_tags %} 
 {% load agon_ratings_tags %} 
 {% load dialogos_tags %} 
 
-{% include "poi/_poi_head.html" %}
-<div class="btn" onclick="history.back();">Indietro</div>
-<!-- BASIC -->
-<h1>{{ poi.poi_id }}</h1>
+{% block title %}POI — {{ poi.poi_id }}{% endblock %}
 
-<div class="well">
-	<ul>
-		{% for key in poi.properties.keys %}
-			<li><h3>{{ key }}: {{ poi.properties|get:key }}</h3></li>
-		{% endfor %}
-	</ul>
-</div>
+{% block head %}
+	{% include "poi/_poi_head.html" %}
+	
+	{{ block.super }}
+{% endblock %}
 
-<div class="well">
-	<!-- OVERALL RATING -->
-	{% overall_rating poi "poi" as the_overall_rating %}
-	<div class="overall_rating">Overall: {{ the_overall_rating }}</div>
+{% block body_outer %}
+
+	<div class="btn" onclick="history.back();">Indietro</div>
+	<!-- BASIC -->
+	<h1>{{ poi.poi_id }}</h1>
 	
-	<!-- USER RATING -->
-	{% user_rating request.user poi "poi" as the_user_rating %}
-	<div class="user_rating">User: {{ the_user_rating }}</div>
+	<div class="well">
+		<ul>
+			{% for key in poi.properties.keys %}
+				<li><h3>{{ key }}: {{ poi.properties|get:key }}</h3></li>
+			{% endfor %}
+		</ul>
+	</div>
 	
-	<!-- AJAX RATING -->
-	<div id="user_rating"></div>
+	<div class="well">
+		<!-- OVERALL RATING -->
+		{% overall_rating poi "poi" as the_overall_rating %}
+		<div class="overall_rating">Overall: {{ the_overall_rating }}</div>
+		
+		<!-- AJAX RATING -->
+		<div id="user_rating"></div>
+		
+	</div>
+	
+	<!-- DIALOGOS -->
+	<div class="well">{% with obj=poi user=request.user %} {% include "_comments.html" %} {% endwith %}</div>
+
+{% endblock %}
+
+{% block extra_script %}
 	{% user_rating_js request.user poi "poi" %}
-</div>
+{% endblock %}
 
-<!-- DIALOGOS -->
-<div class="well">{% with obj=poi user=request.user %} {% include "_comments.html" %} {% endwith %}</div>
+
+
