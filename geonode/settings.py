@@ -519,6 +519,17 @@ LEAFLET_CONFIG = {
     'TILES_URL': 'http://{s}.tile2.opencyclemap.org/transport/{z}/{x}/{y}.png'
 }
 
+MAPQUEST_GETMAP_SERVICE = {
+                           'url' : 'http://www.mapquestapi.com/staticmap/v3/getmap',
+                               'params' : {
+                                           'key' : 'Fmjtd|luub21uan9%2Crl%3Do5-96t20r',
+                                           'size' : '400,400',
+                                           'type' : 'map',
+                                           'imagetype' : 'png',
+                                           'zoom' : 13
+                               }
+                           }
+
 # Load more settings from a file called local_settings.py if it exists
 try:
     from local_settings import *
