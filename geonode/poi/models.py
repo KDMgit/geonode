@@ -6,6 +6,7 @@ from geonode.settings import MAPQUEST_GETMAP_SERVICE
 
 import requests
 import simplejson
+import urllib
 
 class Poi(models.Model):
     poi_id = models.CharField(max_length=300)
@@ -58,7 +59,7 @@ class Poi(models.Model):
         p['center'] = coordinates
         p['pois'] = 'blue_1,' + coordinates
         
-        r = requests.get(url, params=p)
+        r = urllib.urlencode(p)
         
-        return r.url
+        return url + '?' + r
     
