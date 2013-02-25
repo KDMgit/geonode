@@ -1,8 +1,10 @@
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
+from django.contrib.auth.decorators import login_required
 from geonode.poi.models import Poi
 from geonode.settings import STATIC_URL
 
+@login_required
 def poi_detail(request, poi_id):
     try:
         p = Poi.objects.get(poi_id=poi_id)

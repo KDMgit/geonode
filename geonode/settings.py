@@ -197,6 +197,7 @@ INSTALLED_APPS = (
     
     # OCD
     'geonode.poi',
+    'geonode.mobile',
 )
 
 LOGGING = {

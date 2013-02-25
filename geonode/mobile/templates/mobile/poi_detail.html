@@ -1,0 +1,52 @@
+{% extends "site_base.html" %}
+
+{% load poi_extra %} 
+{% load geonode_auth %} 
+{% load bootstrap_tags %} 
+{% load agon_ratings_tags %} 
+{% load dialogos_tags %} 
+
+{% block title %}POI — {{ poi.poi_id }}{% endblock %}
+
+{% block head %}
+	{% include "poi/_poi_head.html" %}
+	
+	{{ block.super }}
+{% endblock %}
+
+{% block body_outer %}
+
+	<div class="btn" onclick="history.back();">Indietro</div>
+	<!-- BASIC -->
+	<h1>{{ poi.poi_id }}</h1>
+	<h2><img src="{{ poi.get_preview_url }}" /></h2>
+	
+	<div class="well">
+		<ul>
+			{% for key in poi.properties.keys %}
+				<li><h3>{{ key }}: {{ poi.properties|get:key }}</h3></li>
+			{% endfor %}
+		</ul>
+	</div>
+	
+	<div class="well">
+		<!-- OVERALL RATING -->
+		{% overall_rating poi "poi" as the_overall_rating %}
+		<div class="overall_rating">Overall: {{ the_overall_rating }}</div>
+		
+		<!-- AJAX RATING -->
+		<div id="user_rating"></div>
+		
+	</div>
+	
+	<!-- DIALOGOS -->
+	<div class="well">{% with obj=poi user=request.user %} {% include "_comments.html" %} {% endwith %}</div>
+
+{% endblock %}
+
+{% block extra_script %}
+	{% user_rating_js request.user poi "poi" %}
+{% endblock %}
+
+
+

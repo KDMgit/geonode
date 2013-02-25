@@ -95,6 +95,7 @@ urlpatterns = patterns('',
     
     #OCD
     (r'^poi/', include('geonode.poi.urls')),
+    (r'^mobile/', include('geonode.mobile.urls')),
 
     )
 
