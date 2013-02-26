@@ -22,7 +22,14 @@ from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('geonode.mobile.views',
     url(r'^login/$', 'login', name='login'),
-    url(r'^search/$', 'search', name='search'),
+    url(r'^logout/$', 'logout', name='logout'),
+    
+    url(r'^categories/$', 'get_categories', name='get_categories'),
+    url(r'^categories/(?P<category_slug>[^/]+)/$', 'get_layers', name='get_layers'),
+    
+    url(r'^search/(?P<layer>[^/]+)/(?P<bbox>[^/]+)/$', 'search', name='search'),
+    
     url(r'^(?P<poi_id>[^/]+)/$', 'poi_json_detail', name='poi_json_detail'),
-    url(r'^comment/(?P<poi_id>[^/]+)/add$', 'add_poi_comment', name='add_poi_comment'),
+    url(r'^(?P<poi_id>[^/]+)/comments/add$', 'add_poi_comment', name='add_poi_comment'),
+    url(r'^(?P<poi_id>[^/]+)/comments/$', 'get_poi_comments', name='get_poi_comments'),
 )
