@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*- 
 
+from decimal import Decimal
+
+from django.db import models
 from django.shortcuts import get_object_or_404, render_to_response
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
+from django.views.decorators.http import require_POST
 
 from django.http import HttpResponse
 from django.template import RequestContext
@@ -11,56 +15,23 @@ from django.template import RequestContext
 import dialogos.views as dialogos
 from dialogos.models import Comment
 
-from geonode.layers.models import Layer, TopicCategory, TOPIC_CATEGORIES
+import agon_ratings.views as do_rating
+import agon_ratings.templatetags.agon_ratings_tags as get_rating
+from agon_ratings.models import Rating, OverallRating
+from agon_ratings.categories import category_value
+
+from geonode.layers.models import Layer, TopicCategory
 from geonode.poi.models import Poi
 from geonode.settings import GEOSERVER_BASE_URL
+
+import geonode.mobile.utils as utils
 
 import requests
 import simplejson as json
 
-""""Restituisce una tupla contenete 'id del content type, id dell'oggetto'
-
-"""
-def __get_ct_obj_id(poi_id):
-    poi_ct = ContentType.objects.all().filter(name='poi')[0]
-    poi = Poi.objects.get(poi_id=poi_id)
-    
-    return poi_ct.pk, poi.pk
-
-
-def __get_user_bean(user):
-    data = {}
-    
-    data['username'] = user.username
-    data['id'] = user.pk
-    
-    return data
-
-
-def __get_category_bean(topic):
-    data = {}
-    
-    data['id'] = topic.pk
-    data['name'] = topic.name
-    data['description'] = topic.description
-    data['slug'] = topic.slug
-    
-    return data
-
-def __get_layer_bean(layer):
-    data = {}
-    
-    data['id'] = layer.pk
-    data['name'] = layer.name
-    data['title'] = layer.title
-    data['typename' ] = layer.typename
-    data['abstract'] = layer.abstract
-    
-    return data
-
 
 @login_required
-def poi_json_detail(request, poi_id):
+def poi_detail(request, poi_id):
     try:
         p = Poi.objects.get(poi_id=poi_id)
     except Poi.DoesNotExist:
@@ -75,10 +46,17 @@ def poi_json_detail(request, poi_id):
     return HttpResponse(json.dumps(data), content_type="application/json")
 
 
+'''Aggiunge un commento al poi
+
+Vuole nalla chiamata POST:
+
+    comment: il commento
+
+'''
 @login_required
 def add_poi_comment(request, poi_id):
     # Prendiamo gli id numerici del tipo e del poi
-    ct_id, obj_id = __get_ct_obj_id(poi_id)
+    ct_id, obj_id = utils.get_ct_obj_id(poi_id)
     
     # Creiamo il commento
     return dialogos.post_comment(request, ct_id, obj_id)
@@ -86,7 +64,7 @@ def add_poi_comment(request, poi_id):
 
 def get_poi_comments(request, poi_id):
     # Prendiamo gli id numerici del tipo e del poi
-    ct_id, obj_id = __get_ct_obj_id(poi_id)
+    ct_id, obj_id = utils.get_ct_obj_id(poi_id)
     
     data = []
     
@@ -94,7 +72,7 @@ def get_poi_comments(request, poi_id):
     for c in comments:
         comment = {}
         comment['id'] = c.id
-        comment['author'] = __get_user_bean(c.author)
+        comment['author'] = utils.get_user_bean(c.author)
         comment['comment'] = c.comment
         
         data.append(comment)
@@ -131,7 +109,7 @@ def logout(request):
 def get_categories(request):
     data = []
     for x in TopicCategory.objects.all():
-        b = __get_category_bean(x)
+        b = utils.get_category_bean(x)
         data.append(b)
         
     return HttpResponse(json.dumps(data), content_type="application/json")
@@ -143,7 +121,7 @@ def get_layers(request, category_slug):
     
     data = []
     for l in layers.all():
-        b = __get_layer_bean(l)
+        b = utils.get_layer_bean(l)
         data.append(b)
     
     return HttpResponse(json.dumps(data), content_type="application/json")
@@ -172,6 +150,73 @@ def search(request, layer, bbox):
         f.pop('geometry_name', None)
     
     return HttpResponse(json.dumps(j))
+
+        
+def get_poi_user_rating(request, poi_id, category=None):
+    poi = Poi.objects.get(poi_id=poi_id)
+    rating = get_rating.user_rating_value(request.user, poi, category)
+    
+    return HttpResponse(rating)
+
+
+def get_poi_overall_rating(request, poi_id, category=None):
+    '''
+    Il codice di questo metodo è stato riadattato dal sorgente di agon-rating:
+    https://github.com/eldarion/agon-ratings/blob/master/agon_ratings/templatetags/agon_ratings_tags.py
+    
+    Il metodo preso in considerazione è user_rating_value.
+    '''
+    
+    try:
+        # Prendiamo gli id numerici del tipo e del poi
+        ct_id, obj_id = utils.get_ct_obj_id(poi_id)
+        
+        # Prendiamo il poi
+        obj = Poi.objects.get(poi_id=poi_id)
+    
+        # Da qui segue per lo più il metodo originale di agon-rating.
+        if category is None:
+            rating = OverallRating.objects.filter(
+                object_id=obj.pk,
+                content_type=ct_id
+            ).aggregate(r=models.Avg("rating"))["r"]
+            rating = Decimal(str(rating or "0"))
+        else:
+            rating = OverallRating.objects.get(
+                object_id=obj.pk,
+                content_type=ct_id,
+                category=category_value(obj, category)
+            ).rating or 0
+    except OverallRating.DoesNotExist:
+        rating = 0
+    
+    return HttpResponse(rating)
+        
+
+'''Fa il rating di un poi
+
+Vuole una chiamata POST che contenga i campi:
+    
+    rating: un valore numerico 1-5
+    category: una categoria ('poi' per ora)
+
+'''  
+@require_POST
+@login_required
+def set_poi_rating(request, poi_id):
+    ct_id, obj_id = utils.get_ct_obj_id(poi_id)
+    return do_rating.user_rating_value(ct_id, obj_id)
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         
         
