@@ -23,8 +23,8 @@ from django.conf.urls import patterns, include, url
 urlpatterns = patterns('geonode.mobile.views',
     
     #LOGIN
-    url(r'^login/$', 'login', name='mobile_login'),
-    url(r'^logout/$', 'logout', name='mobile_logout'),
+    url(r'^login$', 'login', name='mobile_login'),
+    url(r'^logout$', 'logout', name='mobile_logout'),
     
     #CATEGORIE
     url(r'^categories/$', 'get_categories', name='mobile_get_categories'),

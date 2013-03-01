@@ -23,6 +23,13 @@
 	
 	<div class="well">
 		<ul>
+			<li>Latitude: {{poi.latitude}}</li>
+			<li>Longitude: {{poi.longitude}}</li>
+		</ul>
+	</div>
+	
+	<div class="well">
+		<ul>
 			{% for key in poi.properties.keys %}
 				<li><h3>{{ key }}: {{ poi.properties|get:key }}</h3></li>
 			{% endfor %}

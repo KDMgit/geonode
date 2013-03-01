@@ -44,6 +44,12 @@ class Poi(models.Model):
     def coordinates(self):
         return self.geometry()['coordinates']
     
+    def latitude(self):
+        return self.coordinates()[0]
+    
+    def longitude(self):
+        return self.coordinates()[1]
+    
     def get_absolute_url(self):
         return reverse('poi_detail', current_app='poi', args=[self.poi_id])
     

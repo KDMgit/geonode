@@ -81,22 +81,25 @@ def get_poi_comments(request, poi_id):
     
     
 def login(request):
-    username = request.REQUEST['username']
-    password = request.REQUEST['password']
-    
-    # Controlliamo l'autenticazione
-    user = authenticate(username=username, password=password)
-    
-    if user is not None:
-        if user.is_active:
-            # Facciamo la login
-            auth_login(request, user)
-            return HttpResponse(status=200)
+    try:
+        username = request.REQUEST['username']
+        password = request.REQUEST['password']
+        
+        # Controlliamo l'autenticazione
+        user = authenticate(username=username, password=password)
+        
+        if user is not None:
+            if user.is_active:
+                # Facciamo la login
+                auth_login(request, user)
+                return HttpResponse(status=200)
+            else:
+                # Se l'account non è attivo restituiamo 500
+                return HttpResponse(status=500)
         else:
-            # Se l'account non è attivo restituiamo 500
+            # Se i dati non sono corretti restituiamo 500
             return HttpResponse(status=500)
-    else:
-        # Se i dati non sono corretti restituiamo 500
+    except Exception:
         return HttpResponse(status=500)
     
 
@@ -149,7 +152,7 @@ def search(request, layer, bbox):
         f.pop('type', None)
         f.pop('geometry_name', None)
     
-    return HttpResponse(json.dumps(j))
+    return HttpResponse(json.dumps(j), content_type="application/json")
 
         
 def get_poi_user_rating(request, poi_id, category=None):

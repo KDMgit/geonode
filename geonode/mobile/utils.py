@@ -32,6 +32,7 @@ def get_category_bean(topic):
     data['name'] = topic.name
     data['description'] = topic.description
     data['slug'] = topic.slug
+    data['count'] = topic.layer_set.count()
     
     return data
 
