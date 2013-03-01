@@ -43,14 +43,15 @@ from django.views.generic.list import ListView
 from django.template.defaultfilters import slugify
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
+from django.core import serializers
 
 from geonode.utils import http_client, _split_query, _get_basic_auth_info
-from geonode.layers.forms import LayerForm, LayerUploadForm, NewLayerUploadForm, LayerAttributeForm
-from geonode.layers.models import Layer, ContactRole, Attribute, TopicCategory
+from geonode.layers.forms import LayerForm, LayerUploadForm, NewLayerUploadForm, LayerAttributeForm, LayerCreateFromTemplateForm
+from geonode.layers.models import Layer, ContactRole, Attribute, TopicCategory, LayerTemplate
 from geonode.utils import default_map_config
 from geonode.utils import GXPLayer
 from geonode.utils import GXPMap
-from geonode.layers.utils import save
+from geonode.layers.utils import save, save_template, remove_template
 from geonode.layers.utils import layer_set_permissions
 from geonode.utils import resolve_object
 from geonode.people.forms import ProfileForm, PocForm
@@ -93,34 +94,12 @@ def _resolve_layer(request, typename, permission='layers.change_layer',
 
 #### Basic Layer Views ####
 
-
-class LayerListView(ListView):
-
-    layer_filter = "date"
-    queryset = Layer.objects.all()
-
-    def __init__(self, *args, **kwargs):
-        self.layer_filter = kwargs.pop("layer_filter", "date")
-        self.queryset = self.queryset.order_by("-{0}".format(self.layer_filter))
-        super(LayerListView, self).__init__(*args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        kwargs.update({"layer_filter": self.layer_filter})
-        return kwargs
-
-
-def layer_category(request, slug, template='layers/layer_list.html'):
-    category = get_object_or_404(TopicCategory, slug=slug)
-    layer_list = category.layer_set.all()
-    return render_to_response(
-        template,
-        RequestContext(request, {
-            "object_list": layer_list,
-            "layer_category": category
-            }
-        )
-    )
-
+def layer_list(request, template='layers/layer_list.html'):
+    from geonode.search.views import search_page
+    post = request.POST.copy()
+    post.update({'type': 'layer'})
+    request.POST = post
+    return search_page(request, template=template)
 
 def layer_tag(request, slug, template='layers/layer_list.html'):
     layer_list = Layer.objects.filter(keywords__slug__in=[slug])
@@ -132,7 +111,6 @@ def layer_tag(request, slug, template='layers/layer_list.html'):
             }
         )
     )
-
 
 @login_required
 def layer_upload(request, template='layers/layer_upload.html'):
@@ -146,7 +124,6 @@ def layer_upload(request, template='layers/layer_upload.html'):
             try:
                 tempdir, base_file = form.write_files()
                 title = form.cleaned_data["layer_title"]
-
                 # Replace dots in filename - GeoServer REST API upload bug
                 # and avoid any other invalid characters.
                 # Use the title if possible, otherwise default to the filename
@@ -157,7 +134,12 @@ def layer_upload(request, template='layers/layer_upload.html'):
 
                 name = slugify(name_base.replace(".","_"))
 
-                saved_layer = save(name, base_file, request.user,
+                if form.cleaned_data["templetize"] == True:
+                    saved_template = save_template(name, base_file, request.user)
+                    return HttpResponse(json.dumps({
+                                                    "success": True,
+                                                    "redirect_to": reverse('layer_simpli_upload')}))
+                saved_layer = save(name, base_file, request.user, 
                         overwrite = False,
                         abstract = form.cleaned_data["abstract"],
                         title = form.cleaned_data["layer_title"],
@@ -181,13 +163,48 @@ def layer_upload(request, template='layers/layer_upload.html'):
             return HttpResponse(json.dumps({ "success": False, "errors": form.errors, "errormsgs": errormsgs}))
 
 
+@login_required
+def layer_simpli_upload(request, template='layers/layer_simpli_upload.html'):
+    if request.method == 'GET':
+        return render_to_response(template,
+                                  RequestContext(request, {}))
+    elif request.method == 'POST': 
+        
+        form = LayerCreateFromTemplateForm(request.POST)
+        if form.is_valid():
+            template_name = request.POST['ctype'] 
+            
+            if form.cleaned_data["remove"] == True:
+                remove_template(template_name)
+                return HttpResponse(json.dumps({
+                                                "success": True,
+                                                "redirect_to": reverse('layer_simpli_upload')}))
+            
+            saved_template = LayerTemplate.objects.get(name=template_name)
+            base_file = os.getcwd()+"/geonode/shapefile_templates/"+str(saved_template.id)+"/"+saved_template.base_file
+                        
+            saved_layer = save(template_name, base_file, request.user,
+                               overwrite = False,
+                               abstract = form.cleaned_data['abstract'],
+                               title = form.cleaned_data['layer_title'],
+                               permissions = form.cleaned_data["permissions"]
+                               )
+            return HttpResponse(json.dumps({
+                        "success": True,
+                        "redirect_to": reverse('layer_metadata', args=[saved_layer.typename])}))
+        else:
+            errormsgs = []
+            for e in form.errors.values():
+                errormsgs.extend([escape(v) for v in e])
+            return HttpResponse(json.dumps({ "success": False, "errors": form.errors, "errormsgs": errormsgs}))       
+
 def layer_detail(request, layername, template='layers/layer_detail.html'):
     layer = _resolve_layer(request, layername, 'layers.view_layer', _PERMISSION_MSG_VIEW)
 
     maplayer = GXPLayer(name = layer.typename, ows_url = settings.GEOSERVER_BASE_URL + "wms", layer_params=json.dumps( layer.attribute_config()))
 
-    layer.srid_url = "http://www.spatialreference.org/ref/" + layer.srid.replace(':','/').lower() + "/"	
-	
+    layer.srid_url = "http://www.spatialreference.org/ref/" + layer.srid.replace(':','/').lower() + "/"
+
     #layer.popular_count += 1
     #layer.save()
 
@@ -697,3 +714,12 @@ def feature_edit_check(request, layername):
         return HttpResponse(json.dumps({'authorized': True}), mimetype="application/json")
     else:
         return HttpResponse(json.dumps({'authorized': False}), mimetype="application/json")
+
+def get_layer_template(request):
+    """
+    Return the list of templates
+    """            
+    queryset = LayerTemplate.objects.all()
+    data = '{"total": %s, "%s": %s}' % \
+        (queryset.count(), 'data', serializers.serialize('json', queryset))
+    return HttpResponse(data, mimetype='application/json')

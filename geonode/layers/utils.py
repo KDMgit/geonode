@@ -28,8 +28,10 @@ import uuid
 import os
 import glob
 import sys
+import shutil
 
 # Django functionality
+from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from django.conf import settings
 
@@ -38,18 +40,18 @@ from django.conf import settings
 from geonode import GeoNodeException
 from geonode.utils import check_geonode_is_up
 from geonode.people.utils import get_valid_user
-from geonode.layers.models import Layer
+from geonode.layers.models import Layer, LayerTemplate
+from geonode.people.models import Profile 
+from geonode.geoserver.helpers import cascading_delete, get_sld_for, delete_from_postgis
 from geonode.layers.metadata import set_metadata
 from geonode.people.models import Profile
-from geonode.gs_helpers import cascading_delete
-from geonode.gs_helpers import get_sld_for
-from geonode.gs_helpers import delete_from_postgis
 from django.contrib.auth.models import User
 from geonode.security.models import AUTHENTICATED_USERS, ANONYMOUS_USERS
 # Geoserver functionality
 import geoserver
 from geoserver.catalog import FailedRequestError
 from geoserver.resource import FeatureType, Coverage
+from zipfile import ZipFile
 
 logger = logging.getLogger('geonode.layers.utils')
 
@@ -75,11 +77,28 @@ def layer_type(filename):
        returns a gsconfig resource_type string
        that can be either 'featureType' or 'coverage'
     """
-    extension = os.path.splitext(filename)[1]
-    if extension.lower() in ['.shp']:
-        return FeatureType.resource_type
-    elif extension.lower() in ['.tif', '.tiff', '.geotiff', '.geotif']:
-        return Coverage.resource_type
+    base_name, extension = os.path.splitext(filename)
+    
+    shp_exts = ['.shp',]
+    cov_exts = ['.tif', '.tiff', '.geotiff', '.geotif']
+    csv_exts = ['.csv']
+    kml_exts = ['.kml']
+
+    if extension.lower() == '.zip':
+        zf = ZipFile(filename)
+        # ZipFile doesn't support with statement in 2.6, so don't do it
+        try:
+            for n in zf.namelist():
+                b, e = os.path.splitext(n.lower())
+                if e in shp_exts or e in cov_exts or e in csv_exts:
+                    base_name, extension = b,e
+        finally:
+            zf.close()
+
+    if extension.lower() in shp_exts + csv_exts + kml_exts:
+         return FeatureType.resource_type
+    elif extension.lower() in cov_exts:
+         return Coverage.resource_type
     else:
         msg = ('Saving of extension [%s] is not implemented' % extension)
         raise GeoNodeException(msg)
@@ -509,7 +528,7 @@ def save(layer, base_file, user, overwrite=True, title=None,
 
     # Verify the object was saved to the Django database
     try:
-        Layer.objects.get(name=name)
+        Layer.objects.get(typename=typename)
     except Layer.DoesNotExist, e:
         msg = ('There was a problem saving the layer %s to Catalogue/Django. '
                'Error is: %s' % (layer, str(e)))
@@ -537,11 +556,80 @@ def save(layer, base_file, user, overwrite=True, title=None,
         # Deleting the layer
         saved_layer.delete()
         raise
-
+        
     # Return the created layer object
     return saved_layer
 
+def save_template(template, base_file, user):
+    """
+    Save the template in Geonode Datastore
+    """
+    logger.info(_separator)
+    logger.info('Uploading template: [%s], base filename: [%s]', template, base_file)
+    
+     # Step 0. Verify the file exists
+    logger.info('>>> Step 0. Verify if the file %s exists so we can create '
+                'the template [%s]' % (base_file, template))
+    if not os.path.exists(base_file):
+        msg = ('Could not open %s to save %s. Make sure you are using a '
+               'valid file' % (base_file, template))
+        logger.warn(msg)
+        raise GeoNodeException(msg)
 
+    # Step 1. Check if it is uploading a template that already exists
+    # otherwise create the Django record for the template
+    logger.info('>>> Step 1. Verify if the template already exists, '
+                   'otherwise it will be created %s', template)
+    saved_template, created = LayerTemplate.objects.get_or_create(name=template,author=user)
+    
+    if created == False:
+        msg = ('Template [%s] already exists and will not be created' % (template))
+        logger.warning(msg)
+        raise GeoNodeException(msg)
+    
+    # Step 2. Copy spatial files in template_dir
+    logger.info('>>> Step 2. Coping spatial files into template default dir ')
+    files = get_files(base_file)
+    #destination folder name
+    template_dir = os.getcwd()+"/geonode/shapefile_templates/"+str(saved_template.id)
+    base_name = os.path.basename(base_file)
+    saved_template.base_file = base_name
+    saved_template.save()
+    try:
+        
+        os.mkdir(template_dir)                 
+        for file in files:         
+            shutil.copy(files[file], template_dir)
+    
+    except Exception, e:
+        msg = ('Cannot copy [%s] files in [%s] '
+               'Error is: %s' % (template, template_dir, str(e)))
+        logger.exception(msg)
+        e.args = (msg,)
+        # Deleting the template
+        saved_template.delete()
+        raise   
+    return saved_template
+
+def remove_template(template_name):
+    """ Remove Geonode record and spatial files of the template
+    """
+    saved_template = LayerTemplate.objects.get(name=template_name)
+    template_dir = os.getcwd()+"/geonode/shapefile_templates/"+str(saved_template.id)
+    
+    try:
+        #remove dir
+        if os.path.exists(template_dir):
+            shutil.rmtree(template_dir)
+        #remove record
+        saved_template.delete()
+    except Exception, e:
+        msg = ('Cannot remove [%s] template'
+               'Error is: %s' % (template_name, str(e)))
+        logger.exception(msg)
+        e.args = (msg,)
+        raise     
+                              
 def get_default_user():
     """Create a default user
     """
@@ -553,7 +641,6 @@ def get_default_user():
         raise GeoNodeException('You must have an admin account configured '
                                'before importing data. '
                                'Try: django-admin.py createsuperuser')
-
 
 def file_upload(filename, user=None, title=None,
                 skip=True, overwrite=False, keywords=()):
@@ -649,6 +736,11 @@ def upload(incoming, user=None, overwrite=False,
             save_it = False
             status = 'skipped'
             layer = existing_layers[0]
+            if verbosity > 0:
+                msg = ('Stopping process because '
+                       '--overwrite was not set '
+                       'and a layer with this name already exists.')
+                print >> sys.stderr, msg
         else:
             save_it = True
 
@@ -732,3 +824,4 @@ def _create_db_featurestore(name, data, overwrite=False, charset=None):
     except Exception:
         delete_from_postgis(name)
         raise
+

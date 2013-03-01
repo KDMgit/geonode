@@ -37,19 +37,6 @@ DEBUG = TEMPLATE_DEBUG = True
 # geonode to be listening for GeoServer auth requests.
 os.environ['DJANGO_LIVE_TEST_SERVER_ADDRESS'] = 'localhost:8000'
 
-# Import uploaded shapefiles into a database such as PostGIS?
-DB_DATASTORE = True
-
-# Database datastore connection settings
-DB_DATASTORE_DATABASE = 'geoserver'
-DB_DATASTORE_USER = 'opengeo'
-DB_DATASTORE_PASSWORD = 'opengeo'
-DB_DATASTORE_HOST = '95.110.167.11'
-DB_DATASTORE_PORT = '5432'
-DB_DATASTORE_TYPE = 'postgis'
-# The name of the store in Geoserver
-DB_DATASTORE_NAME = 'geoserver'
-
 # Defines settings for development
 DATABASES = {
     'default': {
@@ -118,6 +105,14 @@ STATICFILES_DIRS = [
     os.path.join(PROJECT_ROOT, "static"),
 ]
 
+# List of finder classes that know how to find static files in
+# various locations.
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+)
+
 # Note that Django automatically includes the "templates" dir in all the
 # INSTALLED_APPS, se there is no need to add maps/templates or admin/templates
 TEMPLATE_DIRS = (
@@ -179,7 +174,7 @@ INSTALLED_APPS = (
     'avatar',
     'dialogos',
     'agon_ratings',
-    # 'notification',
+    'notification',
     'announcements',
     'actstream',
     'relationships',
@@ -194,10 +189,6 @@ INSTALLED_APPS = (
     'geonode.search',
     'geonode.catalogue',
     'geonode.documents',
-    
-    # OCD
-    'geonode.poi',
-    'geonode.mobile',
 )
 
 LOGGING = {
@@ -208,7 +199,7 @@ LOGGING = {
             'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
         },
         'simple': {
-            'format': '%(message)s', },
+            'format': '%(message)s',        },
     },
     'handlers': {
         'null': {
@@ -328,10 +319,7 @@ AGON_RATINGS_CATEGORY_CHOICES = {
     },
     "layers.Layer": {
         "layer": "How good is this layer?"
-    },
-    "poi.Poi" : {
-        "poi" : "How good is this poi?"
-    },
+    }
 }
 
 # Activity Stream
@@ -347,7 +335,7 @@ ACTSTREAM_SETTINGS = {
 SOUTH_MIGRATION_MODULES = {
     'avatar': 'geonode.migrations.avatar',
 }
-SOUTH_TESTS_MIGRATE = False
+SOUTH_TESTS_MIGRATE=False
 
 # Settings for Social Apps
 AUTH_PROFILE_MODULE = 'people.Profile'
@@ -376,11 +364,11 @@ SITEURL = "http://localhost:8000/"
 # GeoServer information
 
 # The FULLY QUALIFIED url to the GeoServer instance for this GeoNode.
-GEOSERVER_BASE_URL = "http://95.110.167.11:8080/geoserver/"
+GEOSERVER_BASE_URL = "http://localhost:8080/geoserver/"
 
 # The username and password for a user that can add and
 # edit layer details on GeoServer
-GEOSERVER_CREDENTIALS = "admin", "admin"
+GEOSERVER_CREDENTIALS = "admin", "geoserver"
 
 # CSW settings
 CATALOGUE = {
@@ -389,16 +377,16 @@ CATALOGUE = {
         # default is pycsw in local mode (tied directly to GeoNode Django DB)
         'ENGINE': 'geonode.catalogue.backends.pycsw_local',
         # pycsw in non-local mode
-        # 'ENGINE': 'geonode.catalogue.backends.pycsw_http',
+        #'ENGINE': 'geonode.catalogue.backends.pycsw_http',
         # GeoNetwork opensource
-        # 'ENGINE': 'geonode.catalogue.backends.geonetwork',
+        #'ENGINE': 'geonode.catalogue.backends.geonetwork',
         # deegree and others
-        # 'ENGINE': 'geonode.catalogue.backends.generic',
+        #'ENGINE': 'geonode.catalogue.backends.generic',
 
         # The FULLY QUALIFIED base url to the CSW instance for this GeoNode
         'URL': '%scatalogue/csw' % SITEURL,
-        # 'URL': 'http://localhost:8080/geonetwork/srv/en/csw',
-        # 'URL': 'http://localhost:8080/deegree-csw-demo-3.0.4/services',
+        #'URL': 'http://localhost:8080/geonetwork/srv/en/csw',
+        #'URL': 'http://localhost:8080/deegree-csw-demo-3.0.4/services',
 
         # login credentials (for GeoNetwork)
         'USER': 'admin',
@@ -464,7 +452,7 @@ MAP_BASELAYERS = [{
         "url": GEOSERVER_BASE_URL + "wms",
         "restUrl": "/gs/rest"
      }
-  }, {
+  },{
     "source": {"ptype": "gxp_olsource"},
     "type":"OpenLayers.Layer",
     "args":["No background"],
@@ -494,7 +482,7 @@ MAP_BASELAYERS = [{
     "fixed": True,
     "visibility": False,
     "group":"background"
-  }, {
+  },{
     "source": {"ptype": "gxp_mapboxsource"},
   }, {
     "source": {"ptype": "gxp_olsource"},
@@ -516,20 +504,25 @@ MAP_BASELAYERS = [{
 
 }]
 
+# GeoNode vector data backend configuration.
+
+#Import uploaded shapefiles into a database such as PostGIS?
+DB_DATASTORE = False
+
+#Database datastore connection settings
+DB_DATASTORE_DATABASE = ''
+DB_DATASTORE_USER = ''
+DB_DATASTORE_PASSWORD = ''
+DB_DATASTORE_HOST = ''
+DB_DATASTORE_PORT = ''
+DB_DATASTORE_TYPE = ''
+DB_DATASTORE_NAME = ''
+
+#The name of the store in Geoserver
+
 LEAFLET_CONFIG = {
     'TILES_URL': 'http://{s}.tile2.opencyclemap.org/transport/{z}/{x}/{y}.png'
 }
-
-MAPQUEST_GETMAP_SERVICE = {
-                           'url' : 'http://www.mapquestapi.com/staticmap/v3/getmap',
-                               'params' : {
-                                           'key' : 'Fmjtd|luub21uan9%2Crl%3Do5-96t20r',
-                                           'size' : '400,400',
-                                           'type' : 'map',
-                                           'imagetype' : 'png',
-                                           'zoom' : 13
-                               }
-                           }
 
 # Load more settings from a file called local_settings.py if it exists
 try:

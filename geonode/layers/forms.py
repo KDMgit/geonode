@@ -78,8 +78,8 @@ class LayerUploadForm(forms.Form):
         if base_ext.lower() == '.zip':
             # for now, no verification, but this could be unified
             pass
-        elif base_ext.lower() not in (".shp", ".tif", ".tiff", ".geotif", ".geotiff", ".csv"):
-            raise forms.ValidationError("Only Shapefiles, GeoTiffs, and CSV files are supported. You uploaded a %s file" % base_ext)
+        elif base_ext.lower() not in (".shp", ".tif", ".tiff", ".geotif", ".geotiff"):
+            raise forms.ValidationError("Only Shapefiles and GeoTiffs are supported. You uploaded a %s file" % base_ext)
         if base_ext.lower() == ".shp":
             dbf_file = cleaned["dbf_file"]
             shx_file = cleaned["shx_file"]
@@ -125,10 +125,19 @@ class NewLayerUploadForm(LayerUploadForm):
 
     abstract = forms.CharField(required=False)
     layer_title = forms.CharField(required=False)
+    
+    templetize = forms.BooleanField(required=False)
+    
     permissions = JSONField()
 
     spatial_files = ("base_file", "dbf_file", "shx_file", "prj_file", "sld_file", "xml_file")
 
+class LayerCreateFromTemplateForm(forms.Form):
+    
+    abstract = forms.CharField(required=False)
+    layer_title = forms.CharField(required=False)
+    permissions = JSONField()
+    remove = forms.BooleanField(required=False)
 
 class LayerDescriptionForm(forms.Form):
     title = forms.CharField(300)
