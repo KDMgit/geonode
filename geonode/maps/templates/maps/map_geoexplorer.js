@@ -1,5 +1,6 @@
 {% include 'geonode/ext_header.html' %}
 {% include 'geonode/geo_header.html' %}
+{% include "geonode/ocd_header.html" %}
 <style type="text/css">
 #aboutbutton {
     display: none;
@@ -33,11 +34,17 @@ Ext.onReady(function() {
         localGeoServerBaseUrl: "{{ GEOSERVER_BASE_URL }}",
         localCSWBaseUrl: "{{ CATALOGUE_BASE_URL }}",
         csrfToken: "{{ csrf_token }}",
-        tools: [{ptype: "gxp_getfeedfeatureinfo"}],
+//        tools: [{ptype: "gxp_getfeedfeatureinfo"}],
     }, {{ config }});
 
+    OCD.context.getToolbar = function(){
+		return OCD.context.app.mapPanel.topToolbar
+	};
+	
+	OCD.apply(config);
 
     app = new GeoNode.Composer(config);
+    OCD.context.app = app;
 {% endautoescape %}
 });
 </script>

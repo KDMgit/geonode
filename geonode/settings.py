@@ -37,10 +37,20 @@ DEBUG = TEMPLATE_DEBUG = True
 # geonode to be listening for GeoServer auth requests.
 os.environ['DJANGO_LIVE_TEST_SERVER_ADDRESS'] = 'localhost:8000'
 
+#Database datastore connection settings
+DB_DATASTORE_DATABASE = 'geoserver'
+DB_DATASTORE_USER = 'user'
+DB_DATASTORE_PASSWORD = 'pass'
+DB_DATASTORE_HOST = 'localhost'
+DB_DATASTORE_PORT = '5432'
+DB_DATASTORE_ENGINE = 'django.contrib.gis.db.backends.postgis'
+DB_DATASTORE_TYPE = 'postgis'
+DB_DATASTORE_NAME = 'geoserver'
+
 # Defines settings for development
 DATABASES = {
     'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'ENGINE': DB_DATASTORE_ENGINE,
         'HOST' : DB_DATASTORE_HOST,
         'NAME' : DB_DATASTORE_DATABASE,
         'USER' : DB_DATASTORE_USER,
@@ -48,13 +58,6 @@ DATABASES = {
         'PORT' : DB_DATASTORE_PORT
     }
 }
-
-"""DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(PROJECT_ROOT, 'development.db'),
-    }
-}"""
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -181,14 +184,19 @@ INSTALLED_APPS = (
     'user_messages',
 
     # GeoNode internal apps
-    'geonode.maps',
-    'geonode.layers',
     'geonode.people',
+    'geonode.layers',
+    'geonode.upload',
+    'geonode.maps',
     'geonode.proxy',
     'geonode.security',
     'geonode.search',
     'geonode.catalogue',
     'geonode.documents',
+    
+        # OCD
+    'geonode.poi',
+    'geonode.mobile',
 )
 
 LOGGING = {
@@ -264,7 +272,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.static",
     'django.core.context_processors.request',
     'django.contrib.messages.context_processors.messages',
-    'announcements.context_processors.site_wide_announcements',
     'account.context_processors.account',
     # The context processor below adds things like SITEURL
     # and GEOSERVER_BASE_URL to all pages that use a RequestContext
@@ -313,13 +320,17 @@ DEFAULT_SEARCH_SIZE = 10
 #
 
 # Agon Ratings
+# Agon Ratings
 AGON_RATINGS_CATEGORY_CHOICES = {
     "maps.Map": {
         "map": "How good is this map?"
     },
     "layers.Layer": {
         "layer": "How good is this layer?"
-    }
+    },
+    "poi.Poi" : {
+        "poi" : "How good is this poi?"
+    },
 }
 
 # Activity Stream
@@ -368,7 +379,7 @@ GEOSERVER_BASE_URL = "http://localhost:8080/geoserver/"
 
 # The username and password for a user that can add and
 # edit layer details on GeoServer
-GEOSERVER_CREDENTIALS = "admin", "geoserver"
+GEOSERVER_CREDENTIALS = "admin", "admin"
 
 # CSW settings
 CATALOGUE = {
@@ -507,22 +518,25 @@ MAP_BASELAYERS = [{
 # GeoNode vector data backend configuration.
 
 #Import uploaded shapefiles into a database such as PostGIS?
-DB_DATASTORE = False
-
-#Database datastore connection settings
-DB_DATASTORE_DATABASE = ''
-DB_DATASTORE_USER = ''
-DB_DATASTORE_PASSWORD = ''
-DB_DATASTORE_HOST = ''
-DB_DATASTORE_PORT = ''
-DB_DATASTORE_TYPE = ''
-DB_DATASTORE_NAME = ''
+DB_DATASTORE = True
 
 #The name of the store in Geoserver
 
 LEAFLET_CONFIG = {
     'TILES_URL': 'http://{s}.tile2.opencyclemap.org/transport/{z}/{x}/{y}.png'
 }
+
+MAPQUEST_GETMAP_SERVICE = {
+                           'url' : 'http://www.mapquestapi.com/staticmap/v3/getmap',
+                               'params' : {
+                                           'key' : 'Fmjtd|luub21uan9%2Crl%3Do5-96t20r',
+                                           'size' : '400,400',
+                                           'type' : 'map',
+                                           'imagetype' : 'png',
+                                           'zoom' : 13
+                               }
+                           }
+
 
 # Load more settings from a file called local_settings.py if it exists
 try:

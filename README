@@ -42,8 +42,8 @@ If you are interested in doing development only on GeoNode and want to connecto 
     nano geonode/settings.py
 
     # Sync
-    python manager.py syncdb --all --noinput
-    python manager.py loaddata sample_admin.json
+    python manage.py syncdb --all --noinput
+    python manage.py loaddata sample_admin.json
 
     # Start (do this to start everytime the server from now on)
     python manager.py runserver
