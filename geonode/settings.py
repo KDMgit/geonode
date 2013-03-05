@@ -39,9 +39,9 @@ os.environ['DJANGO_LIVE_TEST_SERVER_ADDRESS'] = 'localhost:8000'
 
 #Database datastore connection settings
 DB_DATASTORE_DATABASE = 'geoserver'
-DB_DATASTORE_USER = 'user'
-DB_DATASTORE_PASSWORD = 'pass'
-DB_DATASTORE_HOST = 'localhost'
+DB_DATASTORE_USER = 'opengeo'
+DB_DATASTORE_PASSWORD = 'opengeo'
+DB_DATASTORE_HOST = '95.110.167.11'
 DB_DATASTORE_PORT = '5432'
 DB_DATASTORE_ENGINE = 'django.contrib.gis.db.backends.postgis'
 DB_DATASTORE_TYPE = 'postgis'
@@ -375,7 +375,7 @@ SITEURL = "http://localhost:8000/"
 # GeoServer information
 
 # The FULLY QUALIFIED url to the GeoServer instance for this GeoNode.
-GEOSERVER_BASE_URL = "http://localhost:8080/geoserver/"
+GEOSERVER_BASE_URL = "http://95.110.167.11:8080/geoserver/"
 
 # The username and password for a user that can add and
 # edit layer details on GeoServer
