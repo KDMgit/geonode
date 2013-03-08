@@ -19,35 +19,40 @@
 	<div class="btn" onclick="history.back();">Indietro</div>
 	<!-- BASIC -->
 	<h1>{{ poi.poi_id }}</h1>
-	<h2><img src="{{ poi.get_preview_url }}" /></h2>
-	
-	<div class="well">
-		<ul>
-			<li>Latitude: {{poi.latitude}}</li>
-			<li>Longitude: {{poi.longitude}}</li>
-		</ul>
-	</div>
-	
-	<div class="well">
-		<ul>
-			{% for key in poi.properties.keys %}
-				<li><h3>{{ key }}: {{ poi.properties|get:key }}</h3></li>
-			{% endfor %}
-		</ul>
-	</div>
-	
-	<div class="well">
-		<!-- OVERALL RATING -->
-		{% overall_rating poi "poi" as the_overall_rating %}
-		<div class="overall_rating">Overall: {{ the_overall_rating }}</div>
+	<hr/>
+	<div class="row">	
+		<div class="span5">	
+			<img class="poi_preview" src="{{ poi.get_preview_url }}" />	
+			<p class="poi_gps">Latitude: {{poi.latitude}} - Longitude: {{poi.longitude}}</p>
+		</div>
 		
-		<!-- AJAX RATING -->
-		<div id="user_rating"></div>
+		<div class="span7">
 		
+			<div class="breadcrumb">
+				<!-- OVERALL RATING -->
+				{% overall_rating poi "poi" as the_overall_rating %}
+				<div class="overall_rating">Overall: {{ the_overall_rating }}</div>
+				
+				<!-- AJAX RATING -->
+				<div id="user_rating"></div>
+				
+			</div>
+				<!-- POI PROPERTIES -->
+			<dl class="poi_properties">
+				{% for key in poi.properties.keys %}
+				<div class="poi_properties_row">
+					<dt>{{ key }}</dt>
+					<dd>{{ poi.properties|get:key }}</dd>
+				</div>
+				{% endfor %}
+			</dl>
+			
+		</div>
 	</div>
+	
 	
 	<!-- DIALOGOS -->
-	<div class="well">{% with obj=poi user=request.user %} {% include "_comments.html" %} {% endwith %}</div>
+	<div class="">{% with obj=poi user=request.user %} {% include "_comments.html" %} {% endwith %}</div>
 
 {% endblock %}
 

@@ -1,0 +1,33 @@
+
+/* consider modifying geonode base.css */
+/* .modal-backdrop, .modal-backdrop.fade.in {
+    opacity: 0.3 !important; 
+} */
+
+.poi_preview {
+	width:100%;
+}
+.poi_gps {
+	margin-top:0;
+	text-align: center;
+	background: #bbb;
+	color: #fff;
+	font-size:85%;
+	font-weight:bold;
+	padding:2px 0
+}
+
+.poi_properties {
+	display:table;
+}
+.poi_properties_row {
+	display:table-row;
+}
+.poi_properties dt, .poi_properties dd{
+	display:table-cell;
+	padding: 5px 10px;
+}
+.poi_properties dt {
+	font-size:90%;
+	color:#bbb;
+}
