@@ -619,7 +619,7 @@ def remove_template(template_name):
     """ Remove Geonode record and spatial files of the template
     """
     saved_template = LayerTemplate.objects.get(name=template_name)
-    template_dir = os.getcwd()+"/geonode/shapefile_templates/"+str(saved_template.name)
+    template_dir = PROJECT_ROOT+"shapefile_templates/"+str(saved_template.name)
     
     try:
         #remove dir
