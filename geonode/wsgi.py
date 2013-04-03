@@ -18,6 +18,12 @@
 #########################################################################
 
 import os
+import sys
+
+#os.path.join(os.path.realpath(__file__), '..', '..')
+path = '/var/lib/apache2/www'
+if path not in sys.path:
+    sys.path.append(path)
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "geonode.settings")
 

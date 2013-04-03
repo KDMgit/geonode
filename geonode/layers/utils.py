@@ -47,6 +47,7 @@ from geonode.layers.metadata import set_metadata
 from geonode.people.models import Profile
 from django.contrib.auth.models import User
 from geonode.security.models import AUTHENTICATED_USERS, ANONYMOUS_USERS
+from geonode.settings import PROJECT_ROOT
 # Geoserver functionality
 import geoserver
 from geoserver.catalog import FailedRequestError
@@ -591,7 +592,7 @@ def save_template(template, base_file, user):
     logger.info('>>> Step 2. Coping spatial files into template default dir ')
     files = get_files(base_file)
     #destination folder name
-    templates_dir = os.getcwd()+"/geonode/shapefile_templates/"
+    templates_dir = PROJECT_ROOT + "shapefile_templates/"
     template_dir = templates_dir+str(saved_template.name)
     
     base_name = os.path.basename(base_file)
