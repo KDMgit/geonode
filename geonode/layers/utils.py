@@ -592,7 +592,7 @@ def save_template(template, base_file, user):
     logger.info('>>> Step 2. Coping spatial files into template default dir ')
     files = get_files(base_file)
     #destination folder name
-    templates_dir = PROJECT_ROOT + "shapefile_templates/"
+    templates_dir = PROJECT_ROOT + "/shapefile_templates/"
     template_dir = templates_dir+str(saved_template.name)
     
     base_name = os.path.basename(base_file)
@@ -619,7 +619,7 @@ def remove_template(template_name):
     """ Remove Geonode record and spatial files of the template
     """
     saved_template = LayerTemplate.objects.get(name=template_name)
-    template_dir = PROJECT_ROOT+"shapefile_templates/"+str(saved_template.name)
+    template_dir = PROJECT_ROOT+"/shapefile_templates/"+str(saved_template.name)
     
     try:
         #remove dir
