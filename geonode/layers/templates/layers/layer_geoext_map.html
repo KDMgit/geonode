@@ -10,23 +10,78 @@ var foobar = {};
         Ext.onReady(function() {
             var config = {
            		tools: [
+           		    {
+           		    	ptype: "gxp_tool",
+           		    	actions : [
+     		    	           new Ext.Button({
+     		    	        	  text : "ciao",
+     		    	        	  handler : function(){
+     		    	        		  
+     		    	        	  }
+     		    	           })
+           		    	]
+           		    },
+					{
+					    ptype: "gxp_zoomtolayerextent",
+					    listeners : {
+					    	activate : function(){
+					    	}
+					    }
+					},
 	                {
-	                    ptype: "gxp_wmsgetfeatureinfo",
-	                    format: "grid",
-	                    outputConfig: {width: 400, height: 200, panIn: false}
+	                    ptype: "gxp_featuremanager",
+	                    id: "states_manager",
+	                    paging: false,
+	                    autoSetLayer: true
 	                },
 	                {
-	                	ptype: "gxp_featuremanager",
-                		outputConfig: {
-                	        id: "featuremanager",
-                	    }
-	                	
+	                    ptype: "gxp_featureeditor",
+	                    featureManager: "states_manager",
+	                    autoLoadFeature: true
 	                },
-// 	                {
-// 	                    ptype: "gxp_featureeditor",
-// 	                    featureManager: "featuremanager",
-// 	                },
-                ],
+	                {
+            			ptype : 'gxp_layermanager',
+            			id : "layermanager",
+           				actions : [
+         		    	           { 
+         		    	        	   ptype : "button" 
+         		    	        	}
+               		    	]
+            		}, {
+            			hidden : true,
+            			actions : [ '-' ]
+            		}, {
+            			ptype : 'gxp_print',
+            			customParams : {
+            				outputFilename : 'GeoExplorer-print'
+            			},
+            			printService : '{{GEOSERVER_BASE_URL}}pdf/'
+            		}, {
+            			
+            			ptype : 'gxp_navigation',
+            			toggleGroup : 'navigation'
+            		}, {
+            			
+            			ptype : 'gxp_wmsgetfeatureinfo',
+            			format : 'grid',
+            			toggleGroup : 'interaction'
+            		}, {
+            			ptype : 'gxp_measure',
+            			controlOptions : {
+            				immediate : true
+            			},
+            			toggleGroup : 'interaction'
+            		}, {
+            			ptype : 'gxp_zoom'
+            		}, {
+            			ptype : 'gxp_navigationhistory'
+            		}, {
+            			ptype : 'gxp_zoomtoextent'
+            		},{
+            			ptype : 'gxp_googleearth'
+            		}, 
+            	],
+            		
                 proxy: "/proxy/?url=",
                 localGeoServerBaseUrl: "{{GEOSERVER_BASE_URL}}",
                 authorizedRoles: "{{ user.is_authenticated|yesno:"ROLE_ADMINISTRATOR,ROLE_ANONYMOUS" }}",
@@ -52,7 +107,7 @@ var foobar = {};
                     },
                     "ready": function() {
                         var map = app.mapPanel.map;
-                        map.zoomToExtent(map.layers.slice(-1)[0].maxExtent);
+                        map.zoomToExtent(map.layers.slice(-2)[0].maxExtent);
                         
                         /*
                          * After GeoExplorer has started apply our plugin to the layers
@@ -68,102 +123,6 @@ var foobar = {};
                 }
             };
             
-            var tools = {
-            		'tools' : [ {
-            			'ptype' : 'gxp_layermanager',
-            			showButtonText : true
-            		}, {
-            			'hidden' : true,
-            			'actions' : [ '-' ]
-            		}, {
-            			'ptype' : 'gxp_print',
-            			'customParams' : {
-            				'outputFilename' : 'GeoExplorer-print'
-            			},
-            			'printService' : '{{GEOSERVER_BASE_URL}}pdf/'
-            		}, {
-            			
-            			'ptype' : 'gxp_navigation',
-            			'toggleGroup' : 'navigation'
-            		}, {
-            			
-            			'ptype' : 'gxp_wmsgetfeatureinfo',
-            			'format' : 'grid',
-            			'toggleGroup' : 'interaction'
-            		}, {
-            			
-            			'ptype' : 'gxp_measure',
-            			'controlOptions' : {
-            				'immediate' : true
-            			},
-            			'toggleGroup' : 'interaction'
-            		}, {
-            			
-            			'ptype' : 'gxp_zoom'
-            		}, {
-            			
-            			'ptype' : 'gxp_navigationhistory'
-            		}, {
-            			
-            			'ptype' : 'gxp_zoomtoextent'
-            		},{
-            			
-            			'ptype' : 'gxp_googleearth'
-            		}, {
-            			
-            			'hidden' : true,
-            			'actions' : [ '->' ]
-            		}, {
-            			'hidden' : true,
-            			'actions' : [ 'aboutbutton' ]
-            		} ],
-            		
-            		'viewerTools' : [ {
-            			'hidden' : true,
-            			'actions' : [ 'layerchooser' ]
-            		}, {
-            			'hidden' : true,
-            			'actions' : [ '-' ]
-            		}, {
-            			'ptype' : 'gxp_print',
-            			'customParams' : {
-            				'outputFilename' : 'GeoExplorer-print'
-            			},
-            			'printService' : '{{GEOSERVER_BASE_URL}}pdf/'
-            		}, {
-            			'ptype' : 'gxp_navigation',
-            			'toggleGroup' : 'navigation'
-            		}, {
-            			'ptype' : 'gxp_wmsgetfeatureinfo',
-            			'format' : 'grid',
-            			'toggleGroup' : 'interaction'
-            		}, {
-            			'ptype' : 'gxp_measure',
-            			'controlOptions' : {
-            				'immediate' : true
-            			},
-            			'toggleGroup' : 'interaction'
-            		}, {
-            			'ptype' : 'gxp_zoom'
-            		}, {
-            			'ptype' : 'gxp_navigationhistory'
-            		}, {
-            			'ptype' : 'gxp_zoomtoextent'
-            		}, {
-            			'ptype' : 'gxp_legend'
-            		}, {
-            			'ptype' : 'gxp_googleearth'
-            		}, {
-            			'hidden' : true,
-            			'actions' : [ '->' ]
-            		}, {
-            			'hidden' : true,
-            			'actions' : [ 'aboutbutton' ]
-            		} ]
-            	};
-            
-            config.tools = config.tools.concat(tools.tools);
-            config.viewerTools = tools.viewerTools;
             config = Ext.apply(config, {{ viewer|safe }});
             
             app = new gxp.Viewer(config);
