@@ -351,12 +351,16 @@ def new_map_config(request):
 
                 if maxx == minx:
                     width_zoom = 15
-                else:
+                elif maxx>minx:
                     width_zoom = math.log(360 / (maxx - minx), 2)
+ 		else:
+		    width_zoom = 15
                 if maxy == miny:
-                    height_zoom = 15
-                else:
-                    height_zoom = math.log(360 / (maxy - miny), 2)
+                     height_zoom = 15
+                elif maxy>miny:
+                     height_zoom = math.log(360 / (maxy - miny), 2)
+		else:
+		    height_zoom = 15
 
                 map_obj.center_x = center[0]
                 map_obj.center_y = center[1]
