@@ -183,10 +183,15 @@ def layer_simpli_upload(request, template='layers/layer_simpli_upload.html'):
                                                 "success": True,
                                                 "redirect_to": reverse('layer_simpli_upload')}))
             
+	    title = form.cleaned_data["layer_title"]
+	    if title is not None and len(title) > 0:
+            	name_base = title
+                name = slugify(name_base.replace(".","_"))
+
             saved_template = LayerTemplate.objects.get(name=template_name)
-            base_file = PROJECT_ROOT + "/shapefile_templates/"+str(saved_template.name)+"/"+saved_template.base_file
-                        
-            saved_layer = save(template_name, base_file, request.user,
+            base_file = PROJECT_ROOT+"/shapefile_templates/"+str(saved_template.name)+"/"+saved_template.base_file
+            print "base_file = " + base_file            
+            saved_layer = save(name, base_file, request.user,
                                overwrite = False,
                                abstract = form.cleaned_data['abstract'],
                                title = form.cleaned_data['layer_title'],
