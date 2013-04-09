@@ -21,8 +21,6 @@
 # Django settings for the GeoNode project.
 import os
 
-PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-
 #
 # General Django development settings
 #
@@ -187,6 +185,7 @@ INSTALLED_APPS = (
 
     # GeoNode internal apps
     'geonode.people',
+    #'geonode.base',
     'geonode.layers',
     'geonode.upload',
     'geonode.maps',

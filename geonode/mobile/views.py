@@ -21,6 +21,13 @@ import requests
 import simplejson as json
 import ipdb
 
+class DecimalEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, decimal.Decimal):
+            return float(o)
+        super(DecimalEncoder, self).default(o)
+
+
 
 @login_required
 def poi_detail(request, poi_id, comments=False):
@@ -45,7 +52,7 @@ def poi_detail(request, poi_id, comments=False):
                       'overall' : p.rating()
                       }
         
-    return HttpResponse(json.dumps(data), content_type="application/json")
+    return HttpResponse(json.dumps(data, cls=DecimalEncoder), content_type="application/json")
 
 
 '''Aggiunge un commento al poi

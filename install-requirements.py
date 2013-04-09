@@ -55,4 +55,5 @@ for r in requirements:
     os.system('pip install ' + r)
     
 os.system('easy_install pycsw')
- 
+os.system('chown -R www-data:www-data geonode/shapefile_templates/')
+os.system('chmod 777 geonode/shapefile_templates/')

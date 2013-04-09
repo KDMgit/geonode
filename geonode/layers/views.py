@@ -59,6 +59,7 @@ from geonode.security.views import _perms_info_json
 from geonode.security.models import AUTHENTICATED_USERS, ANONYMOUS_USERS
 from django.forms.models import inlineformset_factory
 from geoserver.resource import FeatureType
+from geonode.settings import PROJECT_ROOT
 
 logger = logging.getLogger("geonode.layers.views")
 
@@ -183,7 +184,7 @@ def layer_simpli_upload(request, template='layers/layer_simpli_upload.html'):
                                                 "redirect_to": reverse('layer_simpli_upload')}))
             
             saved_template = LayerTemplate.objects.get(name=template_name)
-            base_file = os.getcwd()+"/geonode/shapefile_templates/"+str(saved_template.name)+"/"+saved_template.base_file
+            base_file = PROJECT_ROOT + "/shapefile_templates/"+str(saved_template.name)+"/"+saved_template.base_file
                         
             saved_layer = save(template_name, base_file, request.user,
                                overwrite = False,
