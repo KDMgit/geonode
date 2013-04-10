@@ -1,8 +1,9 @@
 Ext.namespace("OCD.plugins");
 
 OCD.plugins.InfoPOIButton = Ext.extend(Ext.Button, {
-	text : "Get ID",
+	icon : "/static/ocd/img/select_poi.png",
 	enableToggle : "true",
+	tooltip : 'Dettagli POI',
 	listeners : {
 		toggle : function(self, pressed) {
 			if (pressed) {
@@ -13,6 +14,8 @@ OCD.plugins.InfoPOIButton = Ext.extend(Ext.Button, {
 		},
 	},
 });
+
+Ext.ComponentMgr.registerType("ocd_getinfo", OCD.plugins.InfoPOIButton);
 
 /**
  * La funzione che segue prima di essere invocata ha bisogno di essere

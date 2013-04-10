@@ -3,6 +3,9 @@
 {% include "geonode/geo_header.html" %} 
 {% include "geonode/ocd_header.html" %}
 
+{% load geonode_auth %}
+{% has_obj_perm user layer "layer.change_layer" as can_edit_layer %}
+
 <script type="text/javascript">
 var foobar = {};
 {% autoescape off %}
@@ -10,81 +13,91 @@ var foobar = {};
         Ext.onReady(function() {
             var config = {
            		tools: [
-           		    {
-           		    	ptype: "gxp_tool",
-           		    	actions : [
-     		    	           new Ext.Button({
-     		    	        	  text : "ciao",
-     		    	        	  handler : function(){
-     		    	        		  
-     		    	        	  }
-     		    	           })
-           		    	]
-           		    },
+// 	                {
+//             			ptype : 'gxp_layermanager',
+//             			id : "layermanager",
+//            				actions : [
+//          		    	           { 
+//          		    	        	   ptype : "button" 
+//          		    	        	}
+//                		    	]
+//             		},
+            		{
+            			ptype : 'gxp_print',
+            			customParams : {
+            				outputFilename : 'GeoExplorer-print'
+            			},
+            			printService : '{{GEOSERVER_BASE_URL}}pdf/'
+            		},
+            		{
+            			ptype : 'gxp_measure',
+            			controlOptions : {
+            				immediate : true
+            			},
+            			toggleGroup : 'interaction'
+            		},
+            		{
+            			hidden : true,
+            			actions : [ '-' ]
+            		},
+            		{
+            			ptype : 'gxp_navigation',
+            			toggleGroup : 'navigation'
+            		},
 					{
 					    ptype: "gxp_zoomtolayerextent",
-					    listeners : {
-					    	activate : function(){
-					    	}
-					    }
 					},
+            		{
+            			ptype : 'gxp_zoom'
+            		},
+            		{
+            			ptype : 'gxp_navigationhistory'
+            		},
+            		{
+            			ptype : 'gxp_zoomtoextent'
+            		},
+            		{
+            			hidden : true,
+            			actions : [ '-' ]
+            		},
 	                {
 	                    ptype: "gxp_featuremanager",
 	                    id: "states_manager",
 	                    paging: false,
-	                    autoSetLayer: true
+	                    autoSetLayer: true,
+	                    
+	                    // Controlla se si hanno le credenziali di modifica per layer
+	                    {% if not can_edit_layer %}
+	                    	autoActivate : false
+	                    {% endif %}
 	                },
 	                {
 	                    ptype: "gxp_featureeditor",
 	                    featureManager: "states_manager",
 	                    autoLoadFeature: true
 	                },
-	                {
-            			ptype : 'gxp_layermanager',
-            			id : "layermanager",
-           				actions : [
-         		    	           { 
-         		    	        	   ptype : "button" 
-         		    	        	}
-               		    	]
-            		}, {
-            			hidden : true,
-            			actions : [ '-' ]
-            		}, {
-            			ptype : 'gxp_print',
-            			customParams : {
-            				outputFilename : 'GeoExplorer-print'
-            			},
-            			printService : '{{GEOSERVER_BASE_URL}}pdf/'
-            		}, {
-            			
-            			ptype : 'gxp_navigation',
-            			toggleGroup : 'navigation'
-            		}, {
-            			
+            		{
+            			ptype : 'gxp_tool',
+           				actions : [ new OCD.plugins.InfoPOIButton() ]
+            		},
+            		{
             			ptype : 'gxp_wmsgetfeatureinfo',
             			format : 'grid',
             			toggleGroup : 'interaction'
-            		}, {
-            			ptype : 'gxp_measure',
-            			controlOptions : {
-            				immediate : true
-            			},
-            			toggleGroup : 'interaction'
-            		}, {
-            			ptype : 'gxp_zoom'
-            		}, {
-            			ptype : 'gxp_navigationhistory'
-            		}, {
-            			ptype : 'gxp_zoomtoextent'
-            		},{
-            			ptype : 'gxp_googleearth'
-            		}, 
+            		},
+	                
             	],
             		
                 proxy: "/proxy/?url=",
                 localGeoServerBaseUrl: "{{GEOSERVER_BASE_URL}}",
                 authorizedRoles: "{{ user.is_authenticated|yesno:"ROLE_ADMINISTRATOR,ROLE_ANONYMOUS" }}",
+                mapItems : [ 
+	                             {
+	                            	 vertical: true,
+	                            	 xtype: "gx_zoomslider",
+	                            	 height: 100,
+	                             }
+                             ],
 
                 /* The URL to a REST map configuration service.  This service 
                  * provides listing and, with an authenticated user, saving of 
@@ -103,7 +116,7 @@ var foobar = {};
                     	/*
                          * After GeoExplorer has started apply our plugin to the toolbar
                          */
-                    	OCD.plugToolbar(app.mapPanel.topToolbar);
+                    	//OCD.plugToolbar(app.mapPanel.topToolbar);
                     },
                     "ready": function() {
                         var map = app.mapPanel.map;
@@ -132,3 +145,4 @@ var foobar = {};
         });
     {% endautoescape %}
     </script>
+
