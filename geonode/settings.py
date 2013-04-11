@@ -45,6 +45,8 @@ DB_DATASTORE_HOST = '95.110.167.11'
 DB_DATASTORE_PORT = '5432'
 DB_DATASTORE_ENGINE = 'django.contrib.gis.db.backends.postgis'
 DB_DATASTORE_TYPE = 'postgis'
+
+#Inutile
 DB_DATASTORE_NAME = 'geoserver'
 
 # Defines settings for development
