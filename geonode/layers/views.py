@@ -22,7 +22,6 @@ import re
 import os
 import logging
 import shutil
-import shapefile
 
 from urllib import urlencode
 from urlparse import urlparse

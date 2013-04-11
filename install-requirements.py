@@ -1,4 +1,7 @@
 import os
+
+os.system('apt-get install libgdal-dev')
+
 requirements=[
         # native dependencies
         "PIL",
@@ -49,6 +52,7 @@ requirements=[
         "requests",
         "ipdb",
         "psycopg2",
+        "GDAL",
     ]
  
 for r in requirements:
