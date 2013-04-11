@@ -22,6 +22,7 @@ import re
 import os
 import logging
 import shutil
+import shapefile
 
 from urllib import urlencode
 from urlparse import urlparse
@@ -60,6 +61,8 @@ from geonode.security.models import AUTHENTICATED_USERS, ANONYMOUS_USERS
 from django.forms.models import inlineformset_factory
 from geoserver.resource import FeatureType
 from geonode.settings import PROJECT_ROOT
+
+from osgeo import ogr
 
 logger = logging.getLogger("geonode.layers.views")
 
@@ -141,6 +144,16 @@ def layer_upload(request, template='layers/layer_upload.html'):
                         return HttpResponse(json.dumps({
                                                     "success": True,
                                                     "redirect_to": reverse('layer_simpli_upload')}))
+                ##Verify NAME field of the shapefile
+                infile = ogr.Open(str(base_file), 1) 
+                inlyr = infile.GetLayerByIndex(0)
+                layer_defn = inlyr.GetLayerDefn()
+                field_names = [layer_defn.GetFieldDefn(i).GetName() for i in range(layer_defn.GetFieldCount())]
+                if not 'NAME' in field_names:
+                    fieldDefn = ogr.FieldDefn('NAME', ogr.OFTString) 
+                    fieldDefn.SetWidth(14) 
+                    inlyr.CreateField(fieldDefn)
+                
                 saved_layer = save(name, base_file, request.user, 
                         overwrite = False,
                         abstract = form.cleaned_data["abstract"],
@@ -190,7 +203,17 @@ def layer_simpli_upload(request, template='layers/layer_simpli_upload.html'):
 
             saved_template = LayerTemplate.objects.get(name=template_name)
             base_file = PROJECT_ROOT+"/shapefile_templates/"+str(saved_template.name)+"/"+saved_template.base_file
-            print "base_file = " + base_file            
+            
+            ##Verify NAME field of the shapefile
+            infile = ogr.Open(str(base_file), 1) 
+            inlyr = infile.GetLayerByIndex(0)
+            layer_defn = inlyr.GetLayerDefn()
+            field_names = [layer_defn.GetFieldDefn(i).GetName() for i in range(layer_defn.GetFieldCount())]
+            if not 'NAME' in field_names:
+                fieldDefn = ogr.FieldDefn('NAME', ogr.OFTString) 
+                fieldDefn.SetWidth(14) 
+                inlyr.CreateField(fieldDefn)
+                        
             saved_layer = save(name, base_file, request.user,
                                overwrite = False,
                                abstract = form.cleaned_data['abstract'],

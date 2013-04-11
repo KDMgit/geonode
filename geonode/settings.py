@@ -168,6 +168,7 @@ INSTALLED_APPS = (
     'friendlytagloader',
     'geoexplorer',
     'request',
+    'ogr',
 
     # Theme
     "pinax_theme_bootstrap_account",

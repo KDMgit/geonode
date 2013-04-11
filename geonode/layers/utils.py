@@ -415,7 +415,11 @@ def save(layer, base_file, user, overwrite=True, title=None,
     # Step 6. Make sure our data always has a valid projection
     # FIXME: Put this in gsconfig.py
     logger.info('>>> Step 6. Making sure [%s] has a valid projection' % name)
+    #print float(gs_resource.latlon_bbox[0])
+    import ipdb
+    #ipdb.set_trace()
     if gs_resource.latlon_bbox is None:
+        #print "entra quiii"
         box = gs_resource.native_bbox[:4]
         minx, maxx, miny, maxy = [float(a) for a in box]
         if -180 <= minx <= 180 and -180 <= maxx <= 180 and \
@@ -425,8 +429,10 @@ def save(layer, base_file, user, overwrite=True, title=None,
             # If GeoServer couldn't figure out the projection, we just
             # assume it's lat/lon to avoid a bad GeoServer configuration
 
-            gs_resource.latlon_bbox = gs_resource.native_bbox
+            gs_resource.latlon_bbox = ("11.0","14.0","40.0","42.0","EPSG:4326")
             gs_resource.projection = "EPSG:4326"
+            
+            #ipdb.set_trace()
             cat.save(gs_resource)
         else:
             msg = ('GeoServer failed to detect the projection for layer '
