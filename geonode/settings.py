@@ -74,14 +74,14 @@ LANGUAGE_CODE = 'en'
 
 LANGUAGES = (
     ('en', 'English'),
-    ('es', 'Español'),
-    ('it', 'Italiano'),
-    ('fr', 'Français'),
-    ('de', 'Deutsch'),
-    ('el', 'Ελληνικά'),
-    ('id', 'Bahasa Indonesia'),
+#    ('es', 'Español'),
+#    ('it', 'Italiano'),
+#    ('fr', 'Français'),
+#    ('de', 'Deutsch'),
+#    ('el', 'Ελληνικά'),
+#    ('id', 'Bahasa Indonesia'),
 #    ('zh', '中文'),
-    ('ja', '日本人'),
+#    ('ja', '日本人'),
 )
 
 # If you set this to False, Django will make some optimizations so as not
