@@ -85,16 +85,24 @@
 /*	main navigation	*/
 
 .nav-box {
-    background: none repeat scroll 0 0 #F7931E;
+    /* background: none repeat scroll 0 0 #F7931E; */
+    background: transparent;
 }
 
 nav.main-nav ul li a {
-    color: #636363;
+    /* color: #636363; */
+    color: #ccc;
+	padding: 4px 25px 4px 0;
+	font-size: 1.15em;
 }
 
 nav.main-nav ul li a:hover {
 	font-weight:normal;
-	color:#000;
+	/* color:#000; */
+	color:#fff;
+}
+nav.main-nav ul li.current a{
+	color:#fff;
 }
 nav.main-nav ul li.current a:hover {
 	font-weight:700;
