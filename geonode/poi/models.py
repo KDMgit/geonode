@@ -9,6 +9,9 @@ from geonode.settings import GEOSERVER_BASE_URL
 from geonode.settings import MAPQUEST_GETMAP_SERVICE
 
 from dialogos.models import Comment
+from Polygon import Polygon
+
+from utils import transform_to_4326
 
 from agon_ratings.models import OverallRating
 import agon_ratings.templatetags.agon_ratings_tags as get_rating
@@ -107,20 +110,38 @@ class Poi(models.Model):
     def crs(self):
         return self.data()['crs']
     
+    def crs_code(self):
+        return self.crs()['type'] + ':' + self.crs()['properties']['code']
+    
     def feature(self):
         return self.data()['features'][0]
     
     def geometry(self):
         return self.feature()['geometry']
+    
+    def type(self):
+        return self.geometry()['type']
         
     def coordinates(self):
         return self.geometry()['coordinates']
     
+    def center(self):
+        ret = [0, 0]
+        if self.type() == 'MultiPolygon':
+            p = Polygon(self.coordinates()[0][0])
+            ret = list(p.center())
+        else:
+            ret = self.coordinates()
+            
+        c = transform_to_4326(self.crs_code(), ret[0], ret[1])
+        
+        return [c[0], c[1]]
+    
     def latitude(self):
-        return self.coordinates()[0]
+        return self.center()[0]
     
     def longitude(self):
-        return self.coordinates()[1]
+        return self.center()[1]
     
     def get_absolute_url(self):
         return reverse('poi_detail', current_app='poi', args=[self.poi_id])
@@ -128,8 +149,8 @@ class Poi(models.Model):
     def get_preview_url(self):
         url = MAPQUEST_GETMAP_SERVICE['url']
         
-        x = self.coordinates()[0]
-        y = self.coordinates()[1]
+        x = self.center()[0]
+        y = self.center()[1]
         coordinates = str(x)  + ',' + str(y)
         
         p = MAPQUEST_GETMAP_SERVICE['params']
