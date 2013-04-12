@@ -50,8 +50,8 @@
 					</p>
 				</div>
 				<div class="btns">
-					<a href="{% url "layer_upload" %}" class="btn btn-large">{% trans 'Upload Layers' %}</a>
-					<a href="{% url "new_map" %}" class="btn btn-large">{% trans 'Create a Map' %}</a>
+					<a href="{% url "layer_upload" %}" class="btn btn-large btn-blue">{% trans 'Upload Layers' %}</a>
+					<a href="{% url "new_map" %}" class="btn btn-large btn-blue">{% trans 'Create a Map' %}</a>
 				</div>
 		{% endif %}
 
@@ -92,13 +92,14 @@
           </section>
         </div>
       {% endif %} -->
-      <div class="well">
+      <div class="well widget-maps">
         <h2>{% trans "Latest Maps" %}</h2>
         <section class="article-list">
           {% featured_maps as featured_maps %}
           {% for map in featured_maps %}
-            {% include "maps/_map_list_item.html" %}
+            {% include "maps/_map_mini_item.html" %}
           {% endfor %}
+		</section>
       </div>
     </aside>
   </div>
