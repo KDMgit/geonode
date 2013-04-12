@@ -31,3 +31,78 @@
 	font-size:90%;
 	color:#bbb;
 }
+
+/*	OVERRIDES for base.css
+		TO DO: base.less should be modified and recompiled but it's too dependant on bootstrap.less which, in turn, tries to import another missing .less 
+*/
+
+/*	logo	*/
+
+.nav-logo {
+    background: url("../img/logo-ocd-horiz.png") no-repeat scroll 0 0 transparent;
+    float: left;
+    height: 30px;
+    margin-bottom: 7px;
+    margin-top: 3px;
+    overflow: hidden;
+    text-indent: -9999em;
+    width: 130px;
+}
+
+/*	hero unit	*/
+
+.hero-unit {
+	background: url(../img/hero-test.png) top center no-repeat;
+    padding: 0;
+	height: 355px;
+	position:relative;
+}
+
+.hero-unit-content {
+	background:rgba(0,0,0, 0.7);
+	color:#fff;
+	padding:20px;
+	position:absolute;
+	bottom:0;
+	border-radius: 0 0 6px 6px;
+	text-shadow: 1px 1px 1px #000;
+}
+
+
+/*	layout fixes	*/
+
+.content-wrap {
+    margin: 0 auto;
+    padding: 30px 0 0;
+}
+
+.navbar-fixed-top .row {
+	margin-left:0;
+	margin-right:0;
+}
+
+
+/*	main navigation	*/
+
+.nav-box {
+    background: none repeat scroll 0 0 #F7931E;
+}
+
+nav.main-nav ul li a {
+    color: #636363;
+}
+
+nav.main-nav ul li a:hover {
+	font-weight:normal;
+	color:#000;
+}
+nav.main-nav ul li.current a:hover {
+	font-weight:700;
+}
+
+/*	typography	*/
+
+h2.page-title {
+	font-size: 2em;
+}
+
