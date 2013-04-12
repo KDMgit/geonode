@@ -9,7 +9,8 @@
       {% block css-src %}
       <link href="{{ STATIC_URL }}geonode/css/base.css" rel="stylesheet" />
       {% endblock %}
-      <link href='{{ STATIC_URL }}geonode/font/lato_font.css' rel='stylesheet' type='text/css' />
+      <!--<link href='{{ STATIC_URL }}geonode/font/lato_font.css' rel='stylesheet' type='text/css' />-->
+      <link href="{{ STATIC_URL }}ocd/css/style.css" rel="stylesheet" />
       <link href="{{ STATIC_URL }}geonode/css/ext-compatibility.css" rel="stylesheet" />
       <link href="{{ STATIC_URL }}libs/datatables/css/datatables.css" rel="stylesheet" />
       <link href="{{ STATIC_URL }}libs/select2/select2.css" rel="stylesheet"/>
@@ -25,14 +26,14 @@
       <div class="navbar-inner">
         <div class="container">
           <div class="row">
-            <div class="span3">
+            <div class="span3 marginless">
               <a href="{% url home %}">
                 <span class="nav-logo">
                   <a class="brand">{{ SITE_NAME }}</a>
                 </span>
               </a>
             </div>
-            <div class="span9">
+            <div class="pull-right">
               <div class="nav-collapse pull-right">
                 <div class="pull-right">
                   <ul class="nav pull-right account-bar">
@@ -104,7 +105,7 @@
             </div>
            </div>
            <div class="row nav-box">
-            <div class="span10">
+            <div class="span9 marginless">
               <nav class="main-nav">
                 <ul>
                   <li id="nav_home">
@@ -132,11 +133,11 @@
                 </ul>
               </nav>
             </div>
-            <div class="span2">
+            <div class="span2 pull-right">
               <ul class="social">
-                  <li><a href="http://www.facebook.com/sharer.php?u=http://{{ request.get_host }}{{ request.get_full_path }}" class="fb">facebook</a></li>
-                  <li><a href="https://twitter.com/share?url=http://{{   request.get_host }}{{ request.get_full_path }}" class="tw">twitter</a></li>
-                  <li><a href="https://plusone.google.com/_/ 1/confirm?hl=en&url=http://{{ request.get_host }}{{ request.get_full_path }}" class="gp">google+</a></li>
+                  <li class="pull-right"><a href="http://www.facebook.com/sharer.php?u=http://{{ request.get_host }}{{ request.get_full_path }}" class="fb">facebook</a></li>
+                  <li class="pull-right"><a href="https://twitter.com/share?url=http://{{   request.get_host }}{{ request.get_full_path }}" class="tw">twitter</a></li>
+                  <li class="pull-right"><a href="https://plusone.google.com/_/ 1/confirm?hl=en&url=http://{{ request.get_host }}{{ request.get_full_path }}" class="gp">google+</a></li>
               </ul>
             </div>
           </div>
