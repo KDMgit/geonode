@@ -53,6 +53,7 @@ requirements=[
         "ipdb",
         "psycopg2",
         "GDAL",
+        "Polygon2",
     ]
  
 for r in requirements:
