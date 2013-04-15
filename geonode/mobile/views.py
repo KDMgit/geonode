@@ -20,6 +20,7 @@ import geonode.mobile.utils as utils
 import requests
 import simplejson as json
 import ipdb
+import decimal
 
 class DecimalEncoder(json.JSONEncoder):
     def default(self, o):
