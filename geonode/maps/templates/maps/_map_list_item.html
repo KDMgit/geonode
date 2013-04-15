@@ -3,16 +3,18 @@
 {% load agon_ratings_tags %}
 
 {% overall_rating map "map" as map_rating %}
-<article>
-  <h3>Map</h3>
-  <a href="{% url "map_detail" map.id %}">
+<article class="list-item">
+  <!--<h3>Map</h3>-->
+  <div class="item-thumbnail ">
+	<a  class="map-thumbnail" href="{% url "map_detail" map.id %}">
     <div class="img-placeholder pl-153-113">{% trans "No Image Available" %}</div>
-  </a>
+	</a>
+  </div>
   <div class="details">
-    <div class="pull-right">
-      <a href="{% url "map_download" map.id %}" class="btn btn-info download">{% trans "Download" %}</a>
-    </div>
     <a href="{% url "map_detail" map.id %}"><h3>{{ map.title }}</h3></a>
+    <div class="pull-right">
+      <a href="{% url "map_download" map.id %}" class="btn btn-info">{% trans "Download" %}</a>
+    </div>
     <div class="meta">
       {% trans "from" %} <a href="{% url "profile_detail" map.owner.username %}" rel="author">{{ map.owner }}</a>, {{ map.last_modified|timesince }} {% trans 'ago' %}
     </div>

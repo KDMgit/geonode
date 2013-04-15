@@ -64,6 +64,8 @@
 	padding:20px;
 	position:absolute;
 	bottom:0;
+	left:0;
+	right:0;
 	border-radius: 0 0 6px 6px;
 	text-shadow: 1px 1px 1px #000;
 }
@@ -130,6 +132,144 @@ background: #379ea9;
 
 /*	widgets */
 
-.widget-maps .img-placeholder , .widget-maps h3{
+.widget-maps .img-placeholder {
 	display:none;
 }
+
+
+/*	hides list/grid switch until the grid view is properly styled */
+nav.viewby {
+	display:none;
+}
+
+
+/*	maps and layer list items	*/
+
+/* .list-item {
+	position:relative;
+}
+.item-thumbnail {
+	position:absolute;
+	top:0;
+	bottom:0;
+	left: 0;
+	background: #ccc;
+	padding:10px;
+}
+.img-placeholder, .item-thumbnail img {
+	margin:0 !important;
+}
+.list-item .details {
+	padding-left: 185px
+}
+ */
+
+.item-thumbnail  {
+	overflow:hidden;
+	float:left;
+}
+.item-thumbnail img {
+	border:1px solid #ccc;
+	border-radius: 4px;
+}
+
+.list-item .details {
+	float:left;
+	width: 100%;
+}
+
+.details .pull-right {
+	position: relative;
+	right:0;
+	clear:right;
+}
+.details h3 {
+	float:left;
+	width: auto !important}
+.details .meta {
+	clear:both;
+}
+.list article .download {
+    position: relative;
+    right: 0;
+}
+
+aside .list-item {
+	font-size:90%
+}
+
+aside .details h3 {
+float: left;
+width: 150px !important;
+}
+
+.tab-pane article {
+margin-bottom: 10px;
+}
+
+.list article {
+padding-bottom: 10px;
+margin-bottom: 10px;
+overflow: hidden;
+position: relative;
+}
+
+.item-thumbnail .details {
+	padding:10px
+}
+
+/*
+********* DARK THEME
+
+
+
+body {
+	color: #fff;
+	background: #000;
+}
+
+.content-wrap, aside .well, .x-panel-body {
+    background-color: transparent;
+}
+.list article .rating, .grid article .rating, .list article .activity, .grid article .activity, .meta {
+    color: #999999;
+}
+
+h2.page-title {
+    color: #CCCCCC;
+}
+
+aside .well, aside .well h2 {
+	border-color: #333;
+	color: #fff;
+}
+
+.list article {
+	border-bottom: 1px solid #666;
+}
+
+.breadcrumb {
+    background-color: #000000;
+    background-image: none;
+    background-repeat: repeat-x;
+    border: 1px solid #333333;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: none;
+}
+
+.modal {
+	color:#000;
+}
+
+ul.nav-pills a.selected {
+    color: #fff !important;
+}
+
+.well {
+    background-color: #333;
+	border: 1px solid #666;
+}
+
+
+********* END DARK THEME
+*/
