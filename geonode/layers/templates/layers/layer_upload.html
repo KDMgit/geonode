@@ -25,7 +25,7 @@
 {% endblock %}
 
 {% block body %}
-  <div class="block">
+ <div class="block">
     <div class="span8">
       <h2 class="page-title">{% trans "Upload Layers" %}</h2>
 
@@ -36,7 +36,7 @@
 	      {% endfor %}
 	    </div>
 	  {% endif %}
-	    <div>{% trans 'GeoNode can import GeoTIFF and Shapefile data. To import a shapefile, first pick its file with the .shp extension. You will then be prompted to pick the other component files.' %}</div>
+	    <div><p>{% trans 'GeoNode can import GeoTIFF and Shapefile data. To import a shapefile, first pick its file with the .shp extension. You will then be prompted to pick the other component files.' %}</p></div>
 	    <div id="upload_form">
 	    </div>
 	</div>
@@ -153,6 +153,7 @@
 	    var templetizeCheck = new Ext.form.Checkbox({
 	    	id: 'templetize',
 	    	fieldLabel: gettext('Create new template'),
+			labelWidth: 222,
 	    	listeners: {
 	    		check: function(checkbox, checked){
 	    			var formButton = Ext.getCmp('formbutton');
@@ -177,11 +178,9 @@
 	    var fp = new Ext.FormPanel({
 	        renderTo: 'upload_form',
 	        fileUpload: true,
-	        width: 500,
 	        frame: true,
 	        autoHeight: true,
 	        unstyled: true,
-	        labelWidth: 50,
 	        defaults: {
 	            anchor: '95%',
 	            msgTarget: 'side'
@@ -285,10 +284,10 @@
 
 
 {% block sidebar %}
-<ul class="nav nav-list">
-  <li class="nav-header">{% trans "Permissions" %}</li>
-  <li class="form-inline">
-    <div id="permissions_form"></div>
-  </li>
-</ul>
+
+	<div class="offset8">
+		<h2>{% trans "Permissions" %}</h2>
+		<div class="form-inline" id="permissions_form"></div>
+	</div>
+	
 {% endblock %}
