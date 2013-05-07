@@ -63,14 +63,14 @@
 
 	    var base_file = new Ext.ux.form.FileUploadField({
 	        id: 'base_file',
-	        emptyText: gettext('Select a Geotiff or Shapefile .shp file'),
+	        emptyText: gettext('Seleziona un Geotiff o uno Shapefile'),
 	        fieldLabel: gettext('Data'),
 	        name: 'base_file',
 	        allowBlank: false,
 	        listeners: listeners,
             validator: function(name) {
                 if ((name.length > 0) && (name.search(/\.(shp|tif+|geotif+)$/i) == -1)) {
-                    return gettext("File must be a Shapefile or GeoTIFF");
+                    return gettext("Il file deve essere uno Shapefile o un GeoTIFF");
                 } else {
                     return true;
                 }
@@ -79,14 +79,14 @@
 
 	    var dbf_file = new Ext.ux.form.FileUploadField({
 	        id: 'dbf_file',
-	        emptyText: gettext('Select a .dbf data file'),
+	        emptyText: gettext('Seleziona il file con formato .dbf'),
 	        fieldLabel: gettext('DBF'),
 	        name: 'dbf_file',
 	        allowBlank: true,
 	        listeners: listeners,
 	        validator: function(name) {
 	            if ((name.length > 0) && (name.search(/\.dbf$/i) == -1)) {
-	                return gettext("Invalid DBF File.");
+	                return gettext("DBF File invalido.");
 	            } else {
 	                return true;
 	            }
@@ -95,14 +95,14 @@
 
 	    var shx_file = new Ext.ux.form.FileUploadField({
 	        id: 'shx_file',
-	        emptyText: gettext('Select a .shx data file'),
+	        emptyText: gettext('Seleziona il file con formato .shx'),
 	        fieldLabel: gettext('SHX'),
 	        name: 'shx_file',
 	        allowBlank: true,
 	        listeners: listeners,
 	        validator: function(name) {
 	            if ((name.length > 0) && (name.search(/\.shx$/i) == -1)) {
-	                return gettext("Invalid SHX File.");
+	                return gettext("SHX File invalido.");
 	            } else {
 	                return true;
 	            }
@@ -111,14 +111,14 @@
 
 	    var prj_file = new Ext.ux.form.FileUploadField({
 	        id: 'prj_file',
-	        emptyText: gettext('Select a .prj data file (optional)'),
+	        emptyText: gettext('Seleziona il file con formato .prj (optionale)'),
 	        fieldLabel: gettext('PRJ'),
 	        name: 'prj_file',
 	        allowBlank: true,
 	        listeners: listeners,
 	        validator: function(name) {
 	            if ((name.length > 0) && (name.search(/\.prj$/i) == -1)) {
-	                return gettext("Invalid PRJ File.");
+	                return gettext("PRJ File invalido.");
 	            } else {
 	                return true;
 	            }
@@ -127,7 +127,7 @@
 
 	    var sld_file = new Ext.ux.form.FileUploadField({
 	        id: 'sld_file',
-	        emptyText: gettext('Select a .sld style file (optional)'),
+	        emptyText: gettext('Seleziona il file con formato .sld (optionale)'),
 	        fieldLabel: gettext('SLD'),
 	        name: 'sld_file',
 	        allowBlank: true,
@@ -136,7 +136,7 @@
 
         var xml_file = new Ext.ux.form.FileUploadField({
             id: 'xml_file',
-            emptyText: gettext('Select a .xml metadata file (ISO, Dublin Core, FGDC [optional])'),
+            emptyText: gettext('Seleziona il file con formato .xml (ISO, Dublin Core, FGDC [optional])'),
             fieldLabel: gettext('XML'),
             name: 'xml_file',
             allowBlank: true,
@@ -157,7 +157,7 @@
 	    		check: function(checkbox, checked){
 	    			var formButton = Ext.getCmp('formbutton');
 	    		    if (checked) {
-	    		    	formButton.setText("Create");
+	    		    	formButton.setText("Crea");
 	    		    }
 	    		    else {
 	    		    	formButton.setText("Upload");
@@ -199,7 +199,7 @@
                     if (fp.getForm().isValid()) {
                         fp.getForm().submit({
                             url: form_target,
-                            waitMsg: gettext('Uploading your data...'),
+                            waitMsg: gettext('Caricamento dati...'),
                             success: function(fp, o) {
                                 document.location = o.result.redirect_to;
                             },
@@ -248,8 +248,8 @@
 	    };
 
         var disable_title_and_abstract_inputs = function() {
-            layer_title.setValue('DISABLED: Will be derived from metadata XML.');
-            abstractField.setValue('DISABLED: Will be derived from metadata XML.');
+            layer_title.setValue('Disabilitato: Questi dati saranno derivati da XML.');
+            abstractField.setValue('Disabilitato: Questi dati saranno derivati da XML.');
             layer_title.disable();
             abstractField.disable();
         }

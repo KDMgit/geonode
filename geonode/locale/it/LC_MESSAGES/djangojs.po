@@ -1,21 +1,23 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 msgid ""
 msgstr ""
 "Project-Id-Version: GeoNode\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-05-15 12:41-0500\n"
-"PO-Revision-Date: 2012-09-13 04:35+0000\n"
+"PO-Revision-Date: 2013-05-07 17:37+0100\n"
 "Last-Translator: geonode <geonode-transifex@opengeo.org>\n"
-"Language-Team: Italian (http://www.transifex.com/projects/p/geonode/language/it/)\n"
+"Language-Team: Italian (http://www.transifex.com/projects/p/geonode/language/"
+"it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: it\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #: static/geonode/script/GeoExplorer.js:68 static/geonode/script/GeoNode.js:33
 msgid "Add user..."
@@ -166,6 +168,31 @@ msgstr "Salva"
 msgid "Title"
 msgstr "Titolo"
 
+#: templates/lang.js:39 templates/lang.js.c:90 templates/lang.js.c:99
+#: templates/lang.js:152 templates/lang.js.c:174 templates/lang.js.c:209
+msgid "Template:"
+msgstr "Template:"
+
+#: templates/lang.js:39 templates/lang.js.c:90 templates/lang.js.c:99
+#: templates/lang.js:152 templates/lang.js.c:174 templates/lang.js.c:209
+msgid "Remove the selected template"
+msgstr "Rimuovi il template selezionato"
+
+#: templates/lang.js:39 templates/lang.js.c:90 templates/lang.js.c:99
+#: templates/lang.js:152 templates/lang.js.c:174 templates/lang.js.c:209
+msgid "Upload"
+msgstr "Carica"
+
+#: templates/lang.js:39 templates/lang.js.c:90 templates/lang.js.c:99
+#: templates/lang.js:152 templates/lang.js.c:174 templates/lang.js.c:209
+msgid "Create new template"
+msgstr "Crea un nuovo template"
+
+#: templates/lang.js:39 templates/lang.js.c:90 templates/lang.js.c:99
+#: templates/lang.js:152 templates/lang.js.c:174 templates/lang.js.c:209
+msgid "Choose a template"
+msgstr "Scegli un template"
+
 #: templates/lang.js:40 templates/lang.js.c:114
 msgid "Mini"
 msgstr "Mini"
@@ -234,7 +261,9 @@ msgstr "Piccola"
 msgid ""
 "Error contacting server.\n"
 " Please check the url and try again."
-msgstr "Errore nella connessione con il server.\nPer favore, verifica l'URL e prova ancora."
+msgstr ""
+"Errore nella connessione con il server.\n"
+"Per favore, verifica l'URL e prova ancora."
 
 #: templates/lang.js:59
 msgid "Layer Properties"
@@ -260,7 +289,8 @@ msgstr "Cambiare in Google Earth Viewer 3D"
 msgid ""
 "The map that you are trying to load does not exist.  Creating a new map "
 "instead."
-msgstr "La mappa che stai cercando di caricare non esiste. Crea una nuova mappa."
+msgstr ""
+"La mappa che stai cercando di caricare non esiste. Crea una nuova mappa."
 
 #: templates/lang.js:65
 msgid "Unknown Map"
@@ -334,7 +364,9 @@ msgstr "Nessuno sfondo"
 msgid ""
 "Your map is ready to be published to the web!  Simply copy the following "
 "HTML to embed the map in your website:"
-msgstr "La tua mappa è pronta per essere pubblicata sul Web! Copia semplicemente il seguente codice HTML per includere la mappa nel tuo sito web:"
+msgstr ""
+"La tua mappa è pronta per essere pubblicata sul Web! Copia semplicemente il "
+"seguente codice HTML per includere la mappa nel tuo sito web:"
 
 #: templates/lang.js:126 templates/lang.js.c:192
 msgid "Abstract:"

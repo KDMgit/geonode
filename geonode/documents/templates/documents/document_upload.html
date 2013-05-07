@@ -39,7 +39,7 @@
                 var title = new Ext.form.TextField({
                     id: 'title',
                     fieldLabel: gettext('Title'),
-                    emptyText: gettext('Choose a title'),
+                    emptyText: gettext('Scegli un titolo'),
                     name: 'title'
                 });
 
@@ -55,8 +55,8 @@
                     triggerAction: 'all',
                     id: 'ctype',
                     mode: 'local',
-                    fieldLabel: gettext('Link to a'),
-                    emptyText: gettext('Select a resource type to link the document with'),
+                    fieldLabel: gettext('Collega a '),
+                    emptyText: gettext('Seleziona un tipo di risorsa a cui collegare il documento'),
                     autoSelect: true,
                     name: 'ctype',
                     forceSelection: true,
@@ -83,8 +83,8 @@
                         triggerAction: 'all',
                         id: 'objid',
                         mode: 'local',
-                        fieldLabel: gettext('Entitled'),
-                        emptyText: gettext('Select the one'),
+                        fieldLabel: gettext('Titolo'),
+                        emptyText: gettext('Selezionane uno'),
                         autoSelect: true,
                         name: 'objid',
                         forceSelection: true,
@@ -114,7 +114,7 @@
 
                 var base_file = new Ext.ux.form.FileUploadField({
                     id: 'base_file',
-                    emptyText: gettext('Select a document data file'),
+                    emptyText: gettext('Seleziona un documento'),
                     fieldLabel: gettext('File'),
                     name: 'file',
                     allowBlank: false,
@@ -149,7 +149,7 @@
                             if (fp.getForm().isValid()) {
                                 fp.getForm().submit({
                                     url: form_target,
-                                    waitMsg: gettext('Uploading your data...'),
+                                    waitMsg: gettext('Caricamento...'),
                                     success: function(fp, o) {
                                         document.location = o.result.redirect_to;
                                     },
