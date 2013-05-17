@@ -37,7 +37,7 @@
           {% endfor %}
         </div>
       {% endif %}
-        <div>{% trans 'You can create a new layer starting from a template.' %}</div>
+        <div><p>{% trans 'You can create a new layer starting from a template.' %}</p></div>
         <div id="upload_form">
         </div>
     </div>
@@ -151,6 +151,7 @@
         var removeCheck = new Ext.form.Checkbox({
             id: 'remove',
             fieldLabel: gettext('Remove the selected template'),
+			labelStyle: 'width:auto;padding-right:10px',
             listeners: {
                 check: function(checkbox, checked){
                     var formButton = Ext.getCmp('formbutton');
@@ -248,10 +249,8 @@
 
 
 {% block sidebar %}
-<ul class="nav nav-list">
-  <li class="nav-header">{% trans "Permissions" %}</li>
-  <li class="form-inline">
-    <div id="permissions_form"></div>
-  </li>
-</ul>
+	<div class="offset8">
+		<h2>{% trans "Permissions" %}</h2>
+		<div class="form-inline" id="permissions_form"></div>
+	</div>
 {% endblock %}
