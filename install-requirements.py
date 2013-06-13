@@ -1,6 +1,10 @@
 import os
 
 os.system('apt-get install libgdal-dev')
+os.system('apt-get install python-software-properties')
+os.system('apt-add-repository ppa:ubuntugis/ubuntugis-unstable')
+os.system('apt-get update')
+os.system('apt-get install python-gdal')
 
 requirements=[
         # native dependencies
