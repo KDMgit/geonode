@@ -27,6 +27,7 @@ import math
 
 from urlparse import urlparse
 
+from django.db import connections, transaction
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.utils.translation import ugettext_lazy as _
@@ -42,6 +43,7 @@ from django.http import HttpResponse
 #from geonode.maps.models import Map
 from geonode.security.models import AUTHENTICATED_USERS, ANONYMOUS_USERS
 from geonode.security.models import INVALID_PERMISSION_MESSAGE
+from geonode.settings import DEFAULT_LAYER_FEATURE, DB_GEOSERVER_SCHEMA
 
 _wms = None
 _csw = None
@@ -614,3 +616,33 @@ def json_response(body=None, errors=None, redirect_to=None, exception=None,
    if not isinstance(body, basestring):
        body = json.dumps(body)
    return HttpResponse(body, content_type=content_type)
+
+
+def initialize_default_features(layer):
+    
+    lyname = layer.name
+    cursor = connections['geoserver'].cursor()
+    
+    sql = "INSERT INTO {schema}.{name} (\"the_geom\", \"NAME\") VALUES ('{geometry}', '{NAME}')"
+    sql = sql.format(name=lyname, schema=DB_GEOSERVER_SCHEMA, **DEFAULT_LAYER_FEATURE)
+    
+    cursor.execute(sql)
+    connections['geoserver']._commit()
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

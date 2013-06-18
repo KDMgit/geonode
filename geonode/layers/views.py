@@ -51,6 +51,7 @@ from geonode.layers.models import Layer, ContactRole, Attribute, TopicCategory, 
 from geonode.utils import default_map_config
 from geonode.utils import GXPLayer
 from geonode.utils import GXPMap
+from geonode.utils import initialize_default_features
 from geonode.layers.utils import save, save_template, remove_template
 from geonode.layers.utils import layer_set_permissions
 from geonode.utils import resolve_object
@@ -61,7 +62,8 @@ from django.forms.models import inlineformset_factory
 from geoserver.resource import FeatureType
 from geonode.settings import PROJECT_ROOT
 
-from osgeo import ogr
+from osgeo import ogr, osr
+import ipdb
 
 logger = logging.getLogger("geonode.layers.views")
 
@@ -212,6 +214,34 @@ def layer_simpli_upload(request, template='layers/layer_simpli_upload.html'):
                 fieldDefn = ogr.FieldDefn('NAME', ogr.OFTString) 
                 fieldDefn.SetWidth(14) 
                 inlyr.CreateField(fieldDefn)
+                
+            '''# Cancelliamo il campo "ID"
+            i = layer_defn.GetFieldIndex('id')
+            if id != -1:
+                pass
+                
+            # Teniamo il primo POI
+            if inlyr.GetFeatureCount() == 0:
+                layer_defn = inlyr.GetLayerDefn()
+                point = ogr.Geometry(ogr.wkbPoint)
+                point.AddPoint(12.469482, 41.877741) #create a new point at given ccordinates
+                #474695, 5429281
+                #12.469482, 41.877741
+                
+                #y = osr.SpatialReference()
+                #y.ImportFromEPSG(900913)
+                #point = ogr.CreateGeometryFromWkt("POINT (474695 5429281)", reference=y)
+                #point.AddPoint(474695, 5429281)
+                
+                featureIndex = 0 
+                feature = ogr.Feature(layer_defn)
+                feature.SetGeometry(point)
+                feature.SetFID(featureIndex)
+                inlyr.CreateFeature(feature)
+            
+                infile = None'''
+            
+            
                         
             saved_layer = save(name, base_file, request.user,
                                overwrite = False,
@@ -219,6 +249,19 @@ def layer_simpli_upload(request, template='layers/layer_simpli_upload.html'):
                                title = form.cleaned_data['layer_title'],
                                permissions = form.cleaned_data["permissions"]
                                )
+            
+            '''
+            Questa porcata serve per risolvere il bug che sussiste caricando uno
+            shapefile vuoto. Questa funzione inserisce 'brutalmente' un record
+            sul database. Il record è configurabile nei settings.
+            
+            Inserrendo il record si evita che geoserver si confonda con il ESPG.
+            
+            Che il dio degli ingegneri abbia pietà della mia anima...
+            '''
+            
+            initialize_default_features(saved_layer)
+            
             return HttpResponse(json.dumps({
                         "success": True,
                         "redirect_to": reverse('layer_metadata', args=[saved_layer.typename])}))
@@ -227,6 +270,7 @@ def layer_simpli_upload(request, template='layers/layer_simpli_upload.html'):
             for e in form.errors.values():
                 errormsgs.extend([escape(v) for v in e])
             return HttpResponse(json.dumps({ "success": False, "errors": form.errors, "errormsgs": errormsgs}))       
+
 
 def layer_detail(request, layername, template='layers/layer_detail.html'):
     layer = _resolve_layer(request, layername, 'layers.view_layer', _PERMISSION_MSG_VIEW)
@@ -252,6 +296,7 @@ def layer_detail(request, layername, template='layers/layer_detail.html'):
 @login_required
 
 def layer_metadata(request, layername, template='layers/layer_metadata.html'):
+    
     layer = _resolve_layer(request, layername, 'layers.change_layer', _PERMISSION_MSG_METADATA)
     layer_attribute_set = inlineformset_factory(Layer, Attribute, extra=0, form=LayerAttributeForm, )
 

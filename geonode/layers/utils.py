@@ -270,7 +270,7 @@ def cleanup(name, uuid):
 
 
 def save(layer, base_file, user, overwrite=True, title=None,
-         abstract=None, permissions=None, keywords=()):
+         abstract=None, permissions=None, keywords=(), epsg="EPSG:4326"):
     """Upload layer data to Geoserver and registers it with Geonode.
 
        If specified, the layer given is overwritten, otherwise a new layer
@@ -441,6 +441,12 @@ def save(layer, base_file, user, overwrite=True, title=None,
             logger.info(msg, name)
             cascading_delete(cat, name)
             raise GeoNodeException(msg % name)
+            
+            #gs_resource.latlon_bbox = ("-20037508.34", "-20037508.34", "20037508.34", "20037508.34","EPSG:900913")
+            #gs_resource.projection = "EPSG:900913"
+            
+            #ipdb.set_trace()
+            #cat.save(gs_resource)
 
     # Step 7. Create the style and assign it to the created resource
     # FIXME: Put this in gsconfig.py

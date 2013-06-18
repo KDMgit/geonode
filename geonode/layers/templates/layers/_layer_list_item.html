@@ -4,12 +4,30 @@
 {% load layers_tags %}
 
 {% overall_rating layer "layer" as layer_rating %}
+
+<script type="text/javascript">
+function imageError(element, id){
+	$(element).hide();
+	slc = "[name=no-image-" + id + "]";
+	$(slc).each(function(index, element){
+		$(element).removeClass("hidden-image");
+	});
+};
+
+</script>
+<style>
+.hidden-image {
+		display:none;
+	}
+</style>
+
+
 <article class="list-item">
   <!--<h3>Layer</h3>-->
   <div class="item-thumbnail">
   <a class="item-thumbnail layer-thumbnail" href="{% url "layer_detail" layer.typename %}">
-      <!--div class="img-placeholder pl-153-113">{% trans "No Image Available" %}</div-->
-      <img src="{{ layer|layer_thumbnail }}" />
+      <div name="no-image-{{layer.id}}" class="hidden-image img-placeholder pl-153-113">{% trans "No Image Available" %}</div>
+      <img src="{{ layer|layer_thumbnail }}" onError="imageError(this, {{layer.id}})" />
   </a>
   </div>
   <div class="details">

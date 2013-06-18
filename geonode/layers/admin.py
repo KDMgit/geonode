@@ -21,7 +21,7 @@
 from django.contrib import admin
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from geonode.layers.models import Layer, ContactRole, Attribute, TopicCategory, Link, Style
+from geonode.layers.models import Layer, ContactRole, Attribute, TopicCategory, Link, Style, LayerTemplate
 
 class ContactRoleInline(admin.TabularInline):
     model = ContactRole
@@ -80,6 +80,13 @@ class StyleAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'workspace', 'sld_url')
     list_filter = ('workspace',)
     search_fields = ('name', 'workspace',)
+    
+class LayerTemplateAdmin(admin.ModelAdmin):
+    model = LayerTemplate
+    list_display_links = ('id',)
+    list_display = ('id', 'name', 'base_file', 'author')
+    list_editable = ('name', 'base_file', 'author')
+    search_fields = ('name', 'base_file', 'author')
 
 admin.site.register(Layer, LayerAdmin)
 admin.site.register(ContactRole, ContactRoleAdmin)
@@ -87,3 +94,4 @@ admin.site.register(TopicCategory, TopicCategoryAdmin)
 admin.site.register(Link, LinkAdmin)
 admin.site.register(Attribute, AttributeAdmin)
 admin.site.register(Style, StyleAdmin)
+admin.site.register(LayerTemplate, LayerTemplateAdmin)
