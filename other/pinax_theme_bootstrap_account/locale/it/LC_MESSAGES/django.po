@@ -1,0 +1,250 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-05-07 15:39+0200\n"
+"PO-Revision-Date: 2013-05-07 16:02+0100\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.5.4\n"
+
+#: templates/_account_bar.html:7
+msgid "Logged in as:"
+msgstr "Accesso effettuato come:"
+
+#: templates/_account_bar.html:17 templates/account/base.html:11
+msgid "Settings"
+msgstr "Impostazioni"
+
+#: templates/_account_bar.html:19
+msgid "Admin"
+msgstr "Amministratore"
+
+#: templates/_account_bar.html:22 templates/account/logout.html:6
+#: templates/account/logout.html.py:12 templates/account/logout.html:17
+msgid "Log out"
+msgstr "Esci"
+
+#: templates/_account_bar.html:26 templates/account/login.html:7
+#: templates/account/login.html.py:21
+msgid "Log in"
+msgstr "Accedi"
+
+#: templates/_account_bar.html:28
+msgid "or"
+msgstr "o"
+
+#: templates/_account_bar.html:29 templates/account/signup.html:7
+#: templates/account/signup.html.py:13 templates/account/signup.html:21
+msgid "Sign up"
+msgstr "Registrati"
+
+#: templates/account/base.html:10
+msgid "Account"
+msgstr "Account"
+
+#: templates/account/base.html:12 templates/account/password_change.html:7
+#: templates/account/password_change.html:11
+msgid "Change password"
+msgstr "Cambia password"
+
+#: templates/account/base.html:13
+msgid "Delete account"
+msgstr "Cancella account"
+
+#: templates/account/email_confirm.html:6
+#: templates/account/email_confirm.html:12
+msgid "Confirm Email"
+msgstr "Conferma Email"
+
+#: templates/account/email_confirm.html:15
+#, python-format
+msgid "Confirm email address <b>%(email)s</b>?"
+msgstr "Conferma indirizzo email <b>%(email)s</b>?"
+
+#: templates/account/email_confirm.html:17
+msgid "Confirm"
+msgstr "Conferma"
+
+#: templates/account/email_confirmation_sent.html:6
+#: templates/account/email_confirmation_sent.html:9
+msgid "Confirm your email address"
+msgstr "Conferma il tuo indirizzo email"
+
+#: templates/account/email_confirmation_sent.html:11
+#, python-format
+msgid ""
+"We have sent you an email to <b>%(email)s</b> for verification. Follow the "
+"link provided to finalize the signup process. If you do not receive it "
+"within a few minutes, contact us at <a href=\"mailto:"
+"%(THEME_ACCOUNT_CONTACT_EMAIL)s\">%(THEME_ACCOUNT_CONTACT_EMAIL)s</a>."
+msgstr ""
+"Ti abbiamo inviato una email a <b>%(email)s</b> per verificare la tua "
+"identità. Segui il link che trovi all'interno dell'email per completare il "
+"processo di registrazione. Se non ricevi l'email entro pochi minuti, "
+"contattaci a <a href=\"mailto:%(THEME_ACCOUNT_CONTACT_EMAIL)s\">"
+"%(THEME_ACCOUNT_CONTACT_EMAIL)s</a>."
+
+#: templates/account/email_confirmed.html:6
+#: templates/account/email_confirmed.html:9
+msgid "Email confirmed"
+msgstr "Email confermato"
+
+#: templates/account/email_confirmed.html:10
+#, python-format
+msgid "You have confirmed <b>%(email)s</b>"
+msgstr "Ti abbiamo confermato <b>%(email)s</b>"
+
+#: templates/account/login.html:13
+msgid "Log in to an existing account"
+msgstr "Accedi con un account esistente"
+
+#: templates/account/login.html:20
+msgid "Forgot your password?"
+msgstr "Dimenticato la password?"
+
+#: templates/account/logout.html:15
+msgid "Are you sure you want to log out?"
+msgstr "Si vuole uscire dall'applicazione?"
+
+#: templates/account/password_change.html:16
+#: templates/account/password_reset_token.html:16
+msgid "Save"
+msgstr "Salva"
+
+#: templates/account/password_reset.html:8
+#: templates/account/password_reset.html:14
+msgid "Password reset"
+msgstr "Password reset"
+
+#: templates/account/password_reset.html:15
+msgid ""
+"Forgotten your password? Enter your email address below, and we'll send you "
+"an email allowing you to reset it."
+msgstr ""
+"Hai dimenticato la password? Inserisci il tuo indirizzo email qui sotto e ti "
+"invieremo un'email che ti permetterà di resettarla."
+
+#: templates/account/password_reset.html:20
+msgid "Reset my password"
+msgstr "Resetta la password"
+
+#: templates/account/password_reset.html:25
+#, python-format
+msgid ""
+"If you have any trouble resetting your password, contact us at <a href="
+"\"mailto:%(THEME_ACCOUNT_CONTACT_EMAIL)s\">%(THEME_ACCOUNT_CONTACT_EMAIL)s</"
+"a>."
+msgstr ""
+"Se hai problemi per resettare la tua password, contattaci a <a href=\"mailto:"
+"%(THEME_ACCOUNT_CONTACT_EMAIL)s\">%(THEME_ACCOUNT_CONTACT_EMAIL)s</a>."
+
+#: templates/account/password_reset_sent.html:7
+#: templates/account/password_reset_sent.html:10
+msgid "Password reset sent"
+msgstr "Password reset inviato"
+
+#: templates/account/password_reset_sent.html:12
+#, python-format
+msgid ""
+"We have sent you an email. If you do not receive it within a few minutes, "
+"try resending or contact us at <a href=\"mailto:"
+"%(THEME_ACCOUNT_CONTACT_EMAIL)s\">%(THEME_ACCOUNT_CONTACT_EMAIL)s</a>."
+msgstr ""
+"Ti abbiamo inviato una email. Se non la ricevi entro pochi minuti, prova a "
+"rinviare la richiesta o contattaci a <a href=\"mailto:"
+"%(THEME_ACCOUNT_CONTACT_EMAIL)s\">%(THEME_ACCOUNT_CONTACT_EMAIL)s</a>."
+
+#: templates/account/password_reset_sent.html:18
+msgid "Resend"
+msgstr "Rinvia"
+
+#: templates/account/password_reset_sent.html:21
+#, python-format
+msgid ""
+"We have resent the password email. If you do not receive it within a few "
+"minutes, contact us at <a href=\"mailto:%(THEME_ACCOUNT_CONTACT_EMAIL)s\">"
+"%(THEME_ACCOUNT_CONTACT_EMAIL)s</a>."
+msgstr ""
+"Ti abbiamo inviato una email. Se non la ricevi entro pochi minuti, "
+"contattaci a <a href=\"mailto:%(THEME_ACCOUNT_CONTACT_EMAIL)s\">"
+"%(THEME_ACCOUNT_CONTACT_EMAIL)s</a>."
+
+#: templates/account/password_reset_token.html:7
+#: templates/account/password_reset_token.html:11
+msgid "Set your new password"
+msgstr "Imposta la tua nuova password"
+
+#: templates/account/password_reset_token_fail.html:7
+#: templates/account/password_reset_token_fail.html:10
+msgid "Bad token"
+msgstr "Errore Bad Token"
+
+#: templates/account/password_reset_token_fail.html:12
+#, python-format
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a <a href=\"%(url)s\">new password reset</a>."
+msgstr ""
+"Il link per resettare la password è invalido, probabilmente è già stato "
+"utilizzato. Richiedi cortesemente <a href=\"%(url)s\">una nuova password</a>."
+
+#: templates/account/signup_closed.html:7
+#: templates/account/signup_closed.html:10
+msgid "Sign up closed"
+msgstr "Registrazioni chiuse"
+
+#: templates/account/signup_closed.html:12
+msgid "The code you provided was not accepted."
+msgstr "Il codice da te fornito non è stato accettato."
+
+#: templates/account/signup_closed.html:14
+msgid "Sign up is closed to the general public."
+msgstr "La registrazione è chiuso al pubblico."
+
+#: templates/account/email/email_confirmation_message.txt:1
+#, python-format
+msgid ""
+"User '%(user)s' at %(site_name)s has given this as an email address.\n"
+"\n"
+"To confirm this is correct, go to %(activate_url)s\n"
+msgstr ""
+"L'utente '%(user)s' su %(site_name)s ha fornito questo come indirizzo email.\n"
+"\n"
+"Per confermare che è corretto, clicca su %(activate_url)s\n"
+
+#: templates/account/email/email_confirmation_subject.txt:1
+#, python-format
+msgid "Confirm email address for %(site_name)s"
+msgstr "Conferma indirizzo email su %(site_name)s"
+
+#: templates/account/email/password_reset.txt:1
+#, python-format
+msgid ""
+"You're receiving this email because you or someone else has requested a "
+"password for your user account at %(site_name)s.\n"
+"It can be safely ignored if you did not request a password reset. Click the "
+"link below to reset your password.\n"
+"\n"
+"%(password_reset_url)s\n"
+msgstr ""
+"Hai ricevuto questa email perchè tu o qualcun altro ha richiesto una "
+"password per il tuo account su %(site_name)s.\n"
+"Ignora questa mail se non hai inviato tu questa richiesta altrimenti clicca "
+"sul link sottostante per resettare la tua password\n"
+"\n"
+"%(password_reset_url)s\n"
+
+#: templates/account/email/password_reset_subject.txt:1
+#, python-format
+msgid "[%(site_name)s] Password reset"
+msgstr "[%(site_name)s] Password reset"

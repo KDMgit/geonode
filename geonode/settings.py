@@ -37,6 +37,10 @@ DEBUG = TEMPLATE_DEBUG = True
 # geonode to be listening for GeoServer auth requests.
 os.environ['DJANGO_LIVE_TEST_SERVER_ADDRESS'] = 'localhost:8000'
 
+# Email
+EMAIL_HOST = 'smtp.aruba.it'
+EMAIL_PORT = 25
+
 # Database datastore connection settings
 DB_DATASTORE_DATABASE = 'geoserver'
 
