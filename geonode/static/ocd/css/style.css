@@ -449,11 +449,44 @@ padding-right:8px
 
 
 
+/*
+********* layer detail
+*/
 
+/* comments */
 
+.comments header {
+    padding: 1em;
+}
 
+.comments header h3{
+    display: inline;
+}
 
+.comments header .btn{
+    float:right;
+}
 
+.comment-block {
+	margin: 15px 0;
+	overflow:hidden;
+}
+
+.comment-avatar img {
+	float:left;
+	margin: 10px 10px 0 0 !important;
+}
+
+.comments #form_post_comment textarea {
+	width:98%;
+}
+
+.comments #form_post_comment label {
+	display:inline-block;
+	width: 5px;
+	text-indent: 20px;
+	overflow:hidden;
+}
 
 
 
