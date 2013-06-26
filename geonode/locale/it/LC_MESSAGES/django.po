@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GeoNode\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-05-07 17:46+0200\n"
-"PO-Revision-Date: 2013-06-25 19:30+0100\n"
+"PO-Revision-Date: 2013-06-26 13:24+0100\n"
 "Last-Translator: Opros <anto.opro@gmail.com>\n"
 "Language-Team: Italian (http://www.transifex.com/projects/p/geonode/language/"
 "it/)\n"
@@ -87,6 +87,12 @@ msgstr "Più condivisi"
 #: maps/templates/maps/_map_list_item.html:19
 msgid "from"
 msgstr "da"
+
+msgid "From"
+msgstr "Dal"
+
+msgid "To"
+msgstr "Al"
 
 #: documents/templates/documents/_document_list_item.html:10
 #: layers/templates/layers/_layer_list_item.html:11
@@ -2922,9 +2928,18 @@ msgstr "Cerca"
 msgid "Exclude words from your search"
 msgstr "Escludi parole dalla tua ricerca"
 
+msgid "Exclude words"
+msgstr "Escludi parole"
+
 #: search/templates/search/advanced_search.html:40
 msgid "All categories"
 msgstr "Tutte le categorie"
+
+msgid "Content type"
+msgstr "Tipologia contenuti"
+
+msgid "All content"
+msgstr "Tutti"
 
 #: search/templates/search/advanced_search.html:43
 msgid "Maps only"
@@ -2964,11 +2979,19 @@ msgstr "Metadata: "
 
 #: search/templates/search/advanced_search.html:95
 msgid "Since this date"
-msgstr "Da questa data"
+msgstr "A partire dal"
 
 #: search/templates/search/advanced_search.html:104
 msgid "Until this date"
-msgstr "Fino a questa data"
+msgstr "Fino al"
+
+#: search/templates/search/advanced_search.html:104
+msgid "dd-mm-yyyy"
+msgstr "gg-mm-aaaa"
+
+#: search/templates/search/advanced_search.html:104
+msgid "Publication date"
+msgstr "Data di pubblicazione"
 
 #: search/templates/search/advanced_search.html:118
 msgid "Clear Options "
