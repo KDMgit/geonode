@@ -488,7 +488,9 @@ padding-right:8px
 	overflow:hidden;
 }
 
-
+.muted {
+    color: #999999 !important;
+}
 
 
 

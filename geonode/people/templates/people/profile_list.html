@@ -2,10 +2,15 @@
 {% load friendly_loader %} 
 {% friendly_load avatar_tags %}
 {% friendly_load relationship_tags %}
+{% load i18n %}
 
 {% block body_class %}profiles{% endblock %}
 
 {% block body %}
+
+    <h2 class="page-title">{% trans "Users" %}</h2>
+	<p>&nbsp;</p>
+
 
 {% for profile in object_list %}
     {% if profile.user %}
