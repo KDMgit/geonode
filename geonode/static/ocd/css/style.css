@@ -514,3 +514,16 @@ ul.social li a.gp iframe {
 	zoom:1;
 }
 /*	fine fix pulsante google share */
+
+/*	fix elenco download layer */
+
+li.jpg, 
+li.pdf, 
+li.png, 
+li.gml, 
+li.excel, 
+li.json, 
+li.tiles {
+	display:none
+} 
+
