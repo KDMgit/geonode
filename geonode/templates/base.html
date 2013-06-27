@@ -141,7 +141,10 @@
               <ul class="social">
                   <li class="pull-right"><a href="http://www.facebook.com/sharer.php?u=http://{{ request.get_host }}{{ request.get_full_path }}" class="fb">facebook</a></li>
                   <li class="pull-right"><a href="https://twitter.com/share?url=http://{{   request.get_host }}{{ request.get_full_path }}" class="tw">twitter</a></li>
-                  <li class="pull-right"><a href="https://plusone.google.com/_/ 1/confirm?hl=en&url=http://{{ request.get_host }}{{ request.get_full_path }}" class="gp">google+</a></li>
+                  <!-- <li class="pull-right"><a href="https://plusone.google.com/_/ 1/confirm?hl=en&url=http://{{ request.get_host }}{{ request.get_full_path }}" class="gp">google+</a></li> -->
+                  <li class="pull-right"><a class="gp"> 
+					<div id="gp-share" class="g-plus" data-action="share" data-annotation="none"></div>
+				  </a></li>
               </ul>
             </div>
           </div>
@@ -256,5 +259,14 @@
         color: black;
       }
     </style>
+	<!-- pulsante google plus in header -->
+	<script type="text/javascript">
+	  (function() {
+		var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+		po.src = 'https://apis.google.com/js/plusone.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+	  })();
+	</script>
+
   </body>
 </html>

@@ -496,3 +496,20 @@ padding-right:8px
 .modal-body .select2-input {
 	width:200px !important
 }
+
+.tab-content  #share {
+	overflow:visible !important;
+	min-height: 500px;
+}
+
+/*	fix pulsante google share */
+
+ul.social li a.gp {
+	text-indent: 0 !important
+}
+ul.social li a.gp iframe {
+	opacity:0;
+	filter:alpha(opacity=0);
+	zoom:1;
+}
+/*	fine fix pulsante google share */
