@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
+from django.core.context_processors import csrf
 
 from django.http import HttpResponse
 
@@ -99,7 +100,17 @@ def login(request):
             if user.is_active:
                 # Facciamo la login
                 auth_login(request, user)
-                return HttpResponse(status=200)
+                
+                sessionid = request.session.session_key
+                token = csrf(request)['csrf_token'].__str__()
+                
+                data = {}
+                data['csrftoken'] = token
+                data['sessionid'] = sessionid
+                
+                res = HttpResponse(json.dumps(data), status=200, content_type="application/json")
+                
+                return res
             else:
                 # Se l'account non è attivo restituiamo 500
                 return HttpResponse(status=500)
