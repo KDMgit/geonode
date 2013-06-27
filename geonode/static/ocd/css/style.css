@@ -493,4 +493,6 @@ padding-right:8px
 }
 
 
-
+.modal-body .select2-input {
+	width:200px !important
+}
