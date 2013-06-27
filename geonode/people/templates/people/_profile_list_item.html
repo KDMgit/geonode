@@ -4,29 +4,37 @@
 {% friendly_load activity_tags %}
 {% load i18n %}
 
-<article class="well">
-    <a href="{% url profile_detail profile.user.username %}">{% avatar profile.user 65 %} </a>
-    
-    <a href="{% url profile_detail profile.user.username %}">{{ profile.name }}</a> {% if profile.organization %}({{ profile.organization }}){% endif %}
+<article class="row">
+		<a class="span1" href="{% url profile_detail profile.user.username %}">{% avatar profile.user 65 %} </a>
+		
+	<div class="span4">
+		<strong><a href="{% url profile_detail profile.user.username %}">{{ profile.name }}</a></strong> {% if profile.organization %}({{ profile.organization }}){% endif %}
 
-    <p>{{ profile.user.email }}</p>
-    {% if profile.profile %}
-        <p>{{ profile.profile }}</p>
-    {% endif %}
+		<p class="muted">{{ profile.user.email }}</p>
+		{% if profile.profile %}
+			<p>{{ profile.profile }}</p>
+		{% endif %}
 
-    <p>{{ profile.user.layer_set.all|length }} Layers</p>
+		<p>
+		<strong>{{ profile.user.layer_set.all|length }}</strong> {% trans "Layers" %} |
+		<strong>{{ profile.user.map_set.all|length }}</strong> {% trans "Maps" %} 
+		{% if DOCUMENTS_APP %}
+		| <strong>{{ profile.user.document_set.all|length }}</strong> {% trans "Documents" %}
+		{% endif %}
+		</p>
+	</div>
+	<div class="span3">	
+	
+		{% if_has_tag actor_url %}
+			<a href="{% actor_url profile.user %}" class="btn btn-primary btn-mini" type="button">{% trans "Activities" %}</a>
+		{% endif_has_tag %}
 
-    <p>{{ profile.user.map_set.all|length }} Maps</p>
-    {% if DOCUMENTS_APP %}
-    <p>{{ profile.user.document_set.all|length }} Documents</p>
-    {% endif %}
-    {% if request.user != profile.user %}
-        {% if_has_tag if_relationship %}
-            {% include "relationships/_profile_follow.html" %}
-        {% endif_has_tag %}
-    {% endif %}
+		{% if request.user != profile.user %}
+			{% if_has_tag if_relationship %}
+				{% include "relationships/_profile_follow.html" %}
+			{% endif_has_tag %}
+		{% endif %}
 
-    {% if_has_tag actor_url %}
-        <p><a href="{% actor_url profile.user %}" class="btn btn-primary" type="button">Activities</a></p>
-    {% endif_has_tag %}
+	</div>
 </article>
+<hr/>

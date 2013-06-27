@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GeoNode\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-05-07 17:46+0200\n"
-"PO-Revision-Date: 2013-05-07 17:46+0100\n"
+"PO-Revision-Date: 2013-06-27 14:51+0100\n"
 "Last-Translator: Opros <anto.opro@gmail.com>\n"
 "Language-Team: Italian (http://www.transifex.com/projects/p/geonode/language/"
 "it/)\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.5.5\n"
 
 #: utils.py:233 security/models.py:33
 msgid "Anonymous Users"
@@ -88,6 +88,12 @@ msgstr "Più condivisi"
 msgid "from"
 msgstr "da"
 
+msgid "From"
+msgstr "Dal"
+
+msgid "To"
+msgstr "Al"
+
 #: documents/templates/documents/_document_list_item.html:10
 #: layers/templates/layers/_layer_list_item.html:11
 #: layers/templates/layers/_layer_widget_item.html:5
@@ -114,6 +120,9 @@ msgstr "fa"
 #: layers/templates/layers/_layer_list_item.html:23
 #: maps/templates/maps/_map_list_item.html:22
 msgid "view"
+msgstr "Visualizzazioni"
+
+msgid "views"
 msgstr "Visualizzazioni"
 
 #: documents/templates/documents/_document_list_item.html:17
@@ -1964,7 +1973,7 @@ msgstr "Crea una mappa"
 #: layers/templates/layers/_layer_widget_item.html:11
 #, python-format
 msgid "view%(layer.popular_count|pluralize)s"
-msgstr "visualizzazioni%(layer.popular_count|pluralize)."
+msgstr "visualizzazioni%(layer.popular_count|pluralize)s."
 
 #: layers/templates/layers/layer_base.html:13
 #: layers/templates/layers/layer_list.html:9
@@ -2062,7 +2071,7 @@ msgstr "Condividi questo Layer"
 
 #: layers/templates/layers/layer_detail.html:136
 msgid "Rate this layer"
-msgstr "Giudica questo Layer"
+msgstr "Valuta questo Layer"
 
 #: layers/templates/layers/layer_detail.html:140
 #: maps/templates/maps/map_detail.html:89
@@ -2071,7 +2080,7 @@ msgstr "Valutazione media"
 
 #: layers/templates/layers/layer_detail.html:149
 msgid "Maps using this layer"
-msgstr "Mappe che usando questo layer"
+msgstr "Mappe che usano questo layer"
 
 #: layers/templates/layers/layer_detail.html:151
 msgid "List of maps using this layer:"
@@ -2922,9 +2931,18 @@ msgstr "Cerca"
 msgid "Exclude words from your search"
 msgstr "Escludi parole dalla tua ricerca"
 
+msgid "Exclude words"
+msgstr "Escludi parole"
+
 #: search/templates/search/advanced_search.html:40
 msgid "All categories"
 msgstr "Tutte le categorie"
+
+msgid "Content type"
+msgstr "Tipologia contenuti"
+
+msgid "All content"
+msgstr "Tutti"
 
 #: search/templates/search/advanced_search.html:43
 msgid "Maps only"
@@ -2964,11 +2982,19 @@ msgstr "Metadata: "
 
 #: search/templates/search/advanced_search.html:95
 msgid "Since this date"
-msgstr "Da questa data"
+msgstr "A partire dal"
 
 #: search/templates/search/advanced_search.html:104
 msgid "Until this date"
-msgstr "Fino a questa data"
+msgstr "Fino al"
+
+#: search/templates/search/advanced_search.html:104
+msgid "yyyy-mm-dd"
+msgstr "aaaa-mm-gg"
+
+#: search/templates/search/advanced_search.html:104
+msgid "Publication date"
+msgstr "Data di pubblicazione"
 
 #: search/templates/search/advanced_search.html:118
 msgid "Clear Options "
@@ -3075,7 +3101,7 @@ msgstr "Aggiungi un commento"
 
 #: templates/_comments.html:45
 msgid "Submit Comments"
-msgstr "Invia commenti"
+msgstr "Invia commento"
 
 #: templates/_permissions_form.html:11
 msgid "Who can view and download this data?"
@@ -3502,9 +3528,9 @@ msgid ""
 msgstr ""
 "\n"
 "            GeoNode è una piattaforma Open Source che ti permette di creare, "
-"gestire e condividere dati geospaziali e mappe. Se hai domande sul software o "
-"sul servizio, iscriviti alla nostra <a href=\"https://groups.google.com/d/forum/geonode-users"
-"\">mailing list</a>.\n"
+"gestire e condividere dati geospaziali e mappe. Se hai domande sul software "
+"o sul servizio, iscriviti alla nostra <a href=\"https://groups.google.com/d/"
+"forum/geonode-users\">mailing list</a>.\n"
 "          "
 
 #: templates/index.html:25
@@ -3517,9 +3543,9 @@ msgid ""
 msgstr ""
 "\n"
 "            GeoNode è una piattaforma Open Source che ti permette di creare, "
-"gestire e condividere dati geospaziali e mappe. Se hai domande sul software o "
-"sul servizio, iscriviti alla nostra <a href=\"https://groups.google.com/d/forum/geonode-users"
-"\">mailing list</a>.\n"
+"gestire e condividere dati geospaziali e mappe. Se hai domande sul software "
+"o sul servizio, iscriviti alla nostra <a href=\"https://groups.google.com/d/"
+"forum/geonode-users\">mailing list</a>.\n"
 "          "
 
 #: templates/index.html:29
@@ -3904,6 +3930,12 @@ msgstr "Formato della data"
 msgid "Convert Number (As Year)"
 msgstr "Converti numero (come anno)"
 
+msgid "Search Results"
+msgstr "Risultati della ricerca"
+
+msgid "Advanced search"
+msgstr "Ricerca avanzata"
+
 #~ msgid "Add document"
 #~ msgstr "Aggiungi documento"
 
@@ -3928,9 +3960,6 @@ msgstr "Converti numero (come anno)"
 
 #~ msgid "Refine your search"
 #~ msgstr "Affina la tua ricerca"
-
-#~ msgid "Search Results"
-#~ msgstr "Risultati della ricerca"
 
 #~ msgid "Search ..."
 #~ msgstr "Cerca"

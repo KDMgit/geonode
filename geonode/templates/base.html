@@ -37,6 +37,10 @@
               <div class="nav-collapse pull-right">
                 <div class="pull-right">
                   <ul class="nav pull-right account-bar">
+                  <li id="nav_search">
+                    <a href="{% url advanced_search %}">{% trans "Advanced search" %}</a>
+                  </li>
+                      <li class="divider-v">|</li>
                     {% if user.is_authenticated %}
                       <li class="user-avatar">
                         {% avatar user 20 %}
@@ -58,12 +62,11 @@
                           <li><a href="{% url account_logout %}"><i class="icon-off"></i> {% trans "Log out" %}</a></li>
                         </ul>
                       </li>
-                      <li class="divider-v">|</li>
                       <li class="actions">
                         <!--a href="#" rel="tooltip" title="{% trans 'Notifications' %}"><i class="icon-bullhorn"></i></a>
                         <a href="#" rel="tooltip" title="{% trans 'Messages' %}"><i class="icon-envelope"></i></a-->
-                        <a href="{% url data_upload %}" rel="tooltip" title="{% trans 'Upload' %}"><i class="icon-upload-alt"></i></a>
-                        <a href="{% url help %}" rel="tooltip" title="{% trans 'Help' %}"><i class="icon-question-sign"></i></a>
+                        <!--<a href="{% url data_upload %}" rel="tooltip" title="{% trans 'Upload' %}"><i class="icon-upload-alt"></i></a>
+                        <a href="{% url help %}" rel="tooltip" title="{% trans 'Help' %}"><i class="icon-question-sign"></i></a>-->
                       </li>
                     {% else %}
                         <li class="dropdown">
@@ -90,11 +93,11 @@
                           <li class="navbar-text">{% trans "or" %}</li>
                           <li><a href="{% url registration_register %}">{% trans "Register" %}</a></li>
                         {% endif %}
-                        <li class="divider-v">|</li>
-                        <li class="actions">
-                            <a href="{% url help %}" rel="tooltip" title="help"><i class="icon-question-sign"></i></a>
-                        </li>
                     {% endif %}
+                         <li class="divider-v">|</li>
+                         <li class="actions">
+                            <a href="{% url help %}" rel="tooltip" title="help"><i class="icon-question-sign"></i></a>
+                        </li> 
                   </ul>
                 </div>
               </div>
@@ -126,9 +129,10 @@
                   <li id="nav_profiles">
                     <a href="{% url profile_browse %}">{% trans "People" %}</a>
                   </li>
-                  <li id="nav_search">
+<!--              
+				<li id="nav_search">
                     <a href="{% url advanced_search %}">{% trans "Search" %}</a>
-                  </li>
+                 </li>  -->
                   {% block extra-nav %}{% endblock %}
                 </ul>
               </nav>
@@ -137,7 +141,10 @@
               <ul class="social">
                   <li class="pull-right"><a href="http://www.facebook.com/sharer.php?u=http://{{ request.get_host }}{{ request.get_full_path }}" class="fb">facebook</a></li>
                   <li class="pull-right"><a href="https://twitter.com/share?url=http://{{   request.get_host }}{{ request.get_full_path }}" class="tw">twitter</a></li>
-                  <li class="pull-right"><a href="https://plusone.google.com/_/ 1/confirm?hl=en&url=http://{{ request.get_host }}{{ request.get_full_path }}" class="gp">google+</a></li>
+                  <!-- <li class="pull-right"><a href="https://plusone.google.com/_/ 1/confirm?hl=en&url=http://{{ request.get_host }}{{ request.get_full_path }}" class="gp">google+</a></li> -->
+                  <li class="pull-right"><a class="gp"> 
+					<div id="gp-share" class="g-plus" data-action="share" data-annotation="none"></div>
+				  </a></li>
               </ul>
             </div>
           </div>
@@ -252,5 +259,14 @@
         color: black;
       }
     </style>
+	<!-- pulsante google plus in header -->
+	<script type="text/javascript">
+	  (function() {
+		var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+		po.src = 'https://apis.google.com/js/plusone.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+	  })();
+	</script>
+
   </body>
 </html>
