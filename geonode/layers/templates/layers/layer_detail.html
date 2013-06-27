@@ -30,7 +30,7 @@
         </a>
         <ul class="dropdown-menu">
           {% for link in layer.link_set.download %}
-            <li><a href="{{ link.url }}">{{ link.name }} <i class="icon-chevron-right"></i></a></li>
+            <li class="{{ link.extension }}"><a href="{{ link.url }}">{{ link.name }} <i class="icon-chevron-right"></i></a></li>
           {% endfor %}
         </ul>
       </div>
