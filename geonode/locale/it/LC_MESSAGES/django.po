@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GeoNode\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-05-07 17:46+0200\n"
-"PO-Revision-Date: 2013-06-26 13:24+0100\n"
+"PO-Revision-Date: 2013-06-27 14:51+0100\n"
 "Last-Translator: Opros <anto.opro@gmail.com>\n"
 "Language-Team: Italian (http://www.transifex.com/projects/p/geonode/language/"
 "it/)\n"
@@ -120,6 +120,9 @@ msgstr "fa"
 #: layers/templates/layers/_layer_list_item.html:23
 #: maps/templates/maps/_map_list_item.html:22
 msgid "view"
+msgstr "Visualizzazioni"
+
+msgid "views"
 msgstr "Visualizzazioni"
 
 #: documents/templates/documents/_document_list_item.html:17
@@ -2986,8 +2989,8 @@ msgid "Until this date"
 msgstr "Fino al"
 
 #: search/templates/search/advanced_search.html:104
-msgid "dd-mm-yyyy"
-msgstr "gg-mm-aaaa"
+msgid "yyyy-mm-dd"
+msgstr "aaaa-mm-gg"
 
 #: search/templates/search/advanced_search.html:104
 msgid "Publication date"

@@ -38,7 +38,7 @@ function imageError(element, id){
     </div>
     <div class="meta">{% trans 'from' %} <a href="{% url "profile_detail" layer.owner.username %}">{{ layer.owner }}</a>, {{ layer.date|timesince }} {% trans 'ago' %}</div>
     <p class="abstract">{{ layer.abstract }}</p>
-    <p class="activity">{{ layer.popular_count }} {% trans "view" %} | <span class="avg_rating" data-rating="{{ layer_rating }}">{% trans "Average rating" %} <span class="overall_rating"></span></span></p>
+    <p class="activity">{{ layer.popular_count }} {% trans "views" %} | <span class="avg_rating" data-rating="{{ layer_rating }}">{% trans "Average rating" %} <span class="overall_rating"></span></span></p>
   </div>
 
 
