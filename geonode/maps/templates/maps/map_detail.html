@@ -191,16 +191,20 @@
 $('document').ready(function() {	
 	$('a[data-toggle="tab"]').on('shown', function(e){
 		//save the latest tab using a cookie:
-		$.cookie('last_tab', $(e.target).attr('href'));
-		$.cookie('last_URL', $(location).attr('href'));
+		$.cookie('last_tab', $(e.target).attr('href'), { expires: 1, path: '/' });
+		$.cookie('last_URL', $(location).attr('href'), { expires: 1, path: '/' });
 	});
 	var lastTab = $.cookie('last_tab');
+	var currentURL = $(location).attr('href');
 	var lastURL = $.cookie('last_URL');
-	if (lastTab && lastURL) {
+	if (lastTab && (currentURL == lastURL)) {
 		$('ul.nav-tabs').children().removeClass('active');
 		$('a[href='+ lastTab +']').parents('li:first').addClass('active');
 		$('div.tab-content').children().removeClass('active');
 		$(lastTab).addClass('active');
+	} else if (currentURL != lastURL){
+		$.removeCookie('last_tab', { path: '/' });
+		$.removeCookie('last_URL', { path: '/' });
 	}
 });
 </script>
