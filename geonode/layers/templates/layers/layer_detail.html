@@ -247,9 +247,11 @@
 			$('a[data-toggle="tab"]').on('shown', function(e){
 				//save the latest tab using a cookie:
 				$.cookie('last_tab', $(e.target).attr('href'));
+				$.cookie('last_URL', $(location).attr('href'));
 			});
 			var lastTab = $.cookie('last_tab');
-			if (lastTab) {
+			var lastURL = $.cookie('last_URL');
+			if (lastTab && lastURL) {
 				$('ul.nav-tabs').children().removeClass('active');
 				$('a[href='+ lastTab +']').parents('li:first').addClass('active');
 				$('div.tab-content').children().removeClass('active');
