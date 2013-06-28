@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GeoNode\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-05-07 17:46+0200\n"
-"PO-Revision-Date: 2013-06-27 14:51+0100\n"
+"PO-Revision-Date: 2013-06-28 11:38+0100\n"
 "Last-Translator: Opros <anto.opro@gmail.com>\n"
 "Language-Team: Italian (http://www.transifex.com/projects/p/geonode/language/"
 "it/)\n"
@@ -3246,6 +3246,13 @@ msgstr "Versione"
 #: templates/base.html:181
 msgid "Developers"
 msgstr "Sviluppatori"
+
+#: templates/base.html:146
+msgid "Download the Android app"
+msgstr "Scarica l'applicazione per Android"
+
+msgid "Android app"
+msgstr "Android app"
 
 #: templates/base.html:189 templates/geonode/resourcebase_info_panel.html:96
 msgid "Language"

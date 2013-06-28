@@ -29,7 +29,7 @@
             <div class="span3 marginless">
               <a href="{% url home %}">
                 <span class="nav-logo">
-                  <a class="brand">{{ SITE_NAME }}</a>
+                  <span class="brand">{{ SITE_NAME }}</span>
                 </span>
               </a>
             </div>
@@ -108,7 +108,7 @@
             </div>
            </div>
            <div class="row nav-box">
-            <div class="span9 marginless">
+            <div class="span8 marginless">
               <nav class="main-nav">
                 <ul>
                   <li id="nav_home">
@@ -129,7 +129,10 @@
                   <li id="nav_profiles">
                     <a href="{% url profile_browse %}">{% trans "People" %}</a>
                   </li>
-<!--              
+<!--                   <li id="app_download">
+                    <a class="btn" href="#"><i class="icon-download-alt icon-white"></i> {% trans "Mobile app" %}</a>
+                  </li>
+ --><!--              
 				<li id="nav_search">
                     <a href="{% url advanced_search %}">{% trans "Search" %}</a>
                  </li>  -->
@@ -137,7 +140,11 @@
                 </ul>
               </nav>
             </div>
-            <div class="span2 pull-right">
+
+            <div class="span4 pull-right">
+			  <span id="app_download" class="pull-right">
+				<a class="btn" href="{{ STATIC_URL }}apk/OCD-Android-latest.apk" title="{% trans "Download the Android app" %}"><i class="icon-download-alt icon-white"></i> {% trans "Android app" %}</a>
+			  </span>
               <ul class="social">
                   <li class="pull-right"><a href="http://www.facebook.com/sharer.php?u=http://{{ request.get_host }}{{ request.get_full_path }}" class="fb">facebook</a></li>
                   <li class="pull-right"><a href="https://twitter.com/share?url=http://{{   request.get_host }}{{ request.get_full_path }}" class="tw">twitter</a></li>
@@ -146,10 +153,10 @@
 					<div id="gp-share" class="g-plus" data-action="share" data-annotation="none"></div>
 				  </a></li>
               </ul>
+
             </div>
           </div>
         </div>
-       </section>
       </div>
     </div>
     {% endblock header %}
@@ -211,6 +218,7 @@
     <script src="{{ STATIC_URL }}libs/bootstrap/js/bootstrap.min.js"></script>
     <script src="{{ STATIC_URL }}libs/datatables/js/jquery.dataTables.min.js"></script>
     <script src="{{ STATIC_URL }}libs/js/jquery.timeago.js"></script>
+    <script src="{{ STATIC_URL }}libs/js/jquery.cookie.js"></script>
     <script src="{{ STATIC_URL }}libs/js/json2.js"></script>
     <script src="{{ STATIC_URL }}libs/select2/select2.js"></script>
     <script src="{{ STATIC_URL }}geonode/js/utils.js"></script>

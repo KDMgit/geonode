@@ -526,4 +526,11 @@ li.json,
 li.tiles {
 	display:none
 } 
+/*	pulsante download app */
 
+#app_download .btn {
+    color: #FFFFFF;
+    margin: 7px 0 5px 0;
+    padding: 2px 10px;
+	text-transform: uppercase
+}
