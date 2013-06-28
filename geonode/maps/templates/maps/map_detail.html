@@ -186,6 +186,22 @@
             po.src = 'https://apis.google.com/js/plusone.js';
             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
         })();
+
+//activate latest tab, if it exists:
+$('document').ready(function() {	
+	$('a[data-toggle="tab"]').on('shown', function(e){
+		//save the latest tab using a cookie:
+		$.cookie('last_tab', $(e.target).attr('href'));
+	});
+	var lastTab = $.cookie('last_tab');
+	if (lastTab) {
+		$('ul.nav-tabs').children().removeClass('active');
+		$('a[href='+ lastTab +']').parents('li:first').addClass('active');
+		$('div.tab-content').children().removeClass('active');
+		$(lastTab).addClass('active');
+	}
+});
+		
 </script>
 {% include "_permissions_form_js.html" %}
 {% endblock %}
