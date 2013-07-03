@@ -19,12 +19,17 @@
 #########################################################################
 
 from django.conf.urls import patterns, include, url
+from geonode.mobile.signup_view import JsonSignupView
 
 urlpatterns = patterns('geonode.mobile.views',
+                       
+    #TOKEN
+    url(r'^token$', 'token', name='mobile_token'),
     
     #LOGIN
     url(r'^login$', 'login', name='mobile_login'),
     url(r'^logout$', 'logout', name='mobile_logout'),
+    url(r"^signup$", JsonSignupView.as_view(), name="mobile_signup"),
     
     #CATEGORIE
     url(r'^categories/$', 'get_categories', name='mobile_get_categories'),

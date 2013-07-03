@@ -86,6 +86,20 @@ def get_poi_comments(request, poi_id):
     data = utils.get_comments_bean_list(poi)
     
     return HttpResponse(json.dumps(data), content_type="application/json")
+
+
+def token(request):
+    try:
+        token = csrf(request)['csrf_token'].__str__()
+        sessionid = request.session.session_key
+        
+        data = {}
+        data['csrftoken'] = token
+        data['sessionid'] = sessionid
+        
+        return HttpResponse(json.dumps(data), status=200, content_type="application/json")
+    except Exception:
+        return HttpResponse(status=500)
     
     
 def login(request):
